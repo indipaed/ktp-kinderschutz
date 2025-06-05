@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz: Kinderschutz – Sicherheit in der Tagespflege</title>
+    <style>
+      /* Grundlegendes CSS für besseres Aussehen */
+      body {
+          margin: 0;
+          padding: 20px;
+          background-color: #FFFBE6; /* Hintergrundfarbe: FFFBE6 */
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          min-height: 100vh;
+          box-sizing: border-box;
+      }
+      #quiz-container {
+        font-family: Arial, sans-serif;
+        max-width: 600px;
+        width: 100%; /* Stellt sicher, dass es auf kleineren Bildschirmen responsive ist */
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        background-color: #fff;
+        box-sizing: border-box; /* Stellt sicher, dass Padding und Border in der Breite enthalten sind */
+      }
+      #quiz-container h3 {
+          color: #212121; /* Farbe der Fragen: #212121 */
+          margin-bottom: 15px;
+      }
+      #quiz-container p {
+          color: #555;
+      }
+      #quiz-container button {
+        display: block;
+        width: 100%;
+        padding: 12px;
+        margin: 8px 0;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background: #f9f9f9;
+        cursor: pointer;
+        text-align: left;
+        font-size: 1em;
+        transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+      }
+      #quiz-container button:not(:disabled):hover {
+        background: #e0e0e0;
+        border-color: #999;
+      }
+      #quiz-container button:disabled {
+        cursor: not-allowed;
+        opacity: 0.7;
+      }
+      #quiz-container button.correct-answer {
+        background: #d4edda !important;
+        border-color: #28a745 !important;
+        color: #155724;
+      }
+      #quiz-container button.wrong-answer {
+        background: #f8d7da !important;
+        border-color: #dc3545 !important;
+        color: #721c24;
+      }
+      #quiz-container .rationale {
+        margin-top: 15px;
+        padding: 10px;
+        background: #e9ecef;
+        border-left: 5px solid #4E1A3D; /* Akzentfarbe für Begründungs-Rand: 4E1A3D */
+        color: #495057;
+        font-size: 0.9em;
+      }
+      #quiz-container #restart-button {
+        margin-top: 25px;
+        background: #4E1A3D; /* Akzentfarbe für Restart-Button: 4E1A3D */
+        color: white;
+        border: none;
+        cursor: pointer;
+      }
+      #quiz-container #restart-button:hover {
+        background: #3a132c; /* Dunklere Akzentfarbe beim Hover */
+      }
+    </style>
+</head>
+<body>
+
+    <div id="quiz-container">
+        </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+        // Quiz-Daten im JSON-Format
+        const quizData = {
+          "questions": [
+            {
+              "question": "Laut Anne, wo fängt Kinderschutz thematisch an und wo hört er auf? 🤔",
+              "hint": "Anne meint, es ist fast egal, an welcher Stelle du anfängst. ✨",
+              "answerOptions": [
+                {
+                  "text": "Es ist wichtig, überhaupt irgendwo anzufangen und Sicherheit in ihrer Gesamtheit sichtbar zu machen.",
+                  "rationale": "Anne betont, dass es weniger um einen klaren Start- oder Endpunkt geht, sondern darum, aktiv zu werden und Sicherheit umfassend darzustellen. ",
+                  "isCorrect": true
+                },
+                {
+                  "text": "Kinderschutz beginnt bei der Geburt und endet mit der Volljährigkeit.",
+                  "rationale": "Anne spricht nicht von einem festen Zeitrahmen, sondern von der Wichtigkeit des Anfangs und der Sichtbarmachung von Sicherheit.",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Er beginnt mit der Meldung eines Verdachtsfalls und endet mit der Gerichtsentscheidung.",
+                  "rationale": "Dies ist ein spezifischer Aspekt des Kinderschutzes (Paragraf 8a), aber Anne beschreibt den Anfang und das Ende thematisch breiter.",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Kinderschutz ist definiert durch die Einhaltung gesetzlicher Vorschriften.",
+                  "rationale": "Gesetze sind wichtig, aber Anne beschreibt Kinderschutz umfassender als die bloße Einhaltung von Vorschriften.",
+                  "isCorrect": false
+                }
+              ]
+            },
+            {
+              "question": "Welcher große Themenkomplex beinhaltet laut Anne Kinderrechte und die Fähigkeit von Kindern, sich zu beschweren? 📣",
+              "hint": "Anne spricht hier über die Teilhabe und Mitsprache von Kindern. 🗣️",
+              "answerOptions": [
+                {
+                  "text": "Kinderrechte, Partizipation und die Beschwerdemöglichkeiten von Kindern.",
+                  "rationale": "Anne nennt Kinderrechte, Partizipation und die Frage, wie Kinder sich beschweren und rückmelden können, als den ersten großen Themenkomplex. ",
+                  "isCorrect": true
+                },
+                {
+                  "text": "Regelmäßige Gesundheitskontrollen und Hygienestandards.",
+                  "rationale": "Dies sind wichtige Aspekte der Sicherheit, aber nicht der von Anne genannte erste Themenkomplex.",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Die Umsetzung der Bildungspläne in den Bundesländern.",
+                  "rationale": "Bildungspläne sind relevant für die Kindertagespflege, aber nicht der Hauptfokus des genannten Themenkomplexes zu Kinderrechten und Beschwerdemöglichkeiten.",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Die Bereitstellung von altersgerechtem Spielzeug.",
+                  "rationale": "Dies trägt zur Entwicklung bei, ist aber kein Kernaspekt des von Anne beschriebenen Themenkomplexes.",
+                  "isCorrect": false
+                }
+              ]
+            },
+            {
+              "question": "Was sind laut Anne zentrale Aspekte im Themenkomplex Sexualpädagogik und Körper? 🤸‍♀️",
+              "hint": "Anne spricht über den Umgang mit kindlichen Konflikten und persönlichen Grenzen. ⛔",
+              "answerOptions": [
+                {
+                  "text": "Der Umgang mit kindlichen Übergriffen, die Frage nach Nähe und Distanz sowie die Vermittlung von 'Mein Körper gehört mir'.",
+                  "rationale": "Anne behandelt die Frage, wie man mit Übergriffen unter Kindern umgeht (z.B. Beißen, Kratzen), wie man Nähe und Distanz vermittelt und wie man Kindern beibringt, dass ihr Körper ihnen gehört. ",
+                  "isCorrect": true
+                },
+                {
+                  "text": "Die Aufklärung über sexuelle Fortpflanzung im frühen Kindesalter.",
+                  "rationale": "Anne spricht über grundlegende Konzepte wie Körpergrenzen und den Umgang mit kindlichen Übergriffen, nicht spezifisch über Fortpflanzung.",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Das strikte Verbot von Körperkontakt zwischen Kindern.",
+                  "rationale": "Anne betont den bewussten Umgang mit Nähe und Distanz, nicht ein generelles Verbot.",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Das Unterrichten von Fachbegriffen für alle Körperteile.",
+                  "rationale": "Anne spricht vom Benennen von Körperteilen, aber nicht von Fachbegriffen für alle, sondern im Kontext der Selbstbestimmung des Körpers.",
+                  "isCorrect": false
+                }
+              ]
+            },
+            {
+              "question": "Welche Rolle spielt die Zusammenarbeit mit Familien laut Anne im Kinderschutz? 👨‍👩‍👧‍👦",
+              "hint": "Anne erwähnt hier gesetzliche Meldepflichten und die Zusammenarbeit mit einer bestimmten Behörde. 🏛️",
+              "answerOptions": [
+                {
+                  "text": "Die Zusammenarbeit mit Familien, die Festlegung eigener Standards und der Umgang mit §8a Meldungen und dem Jugendamt.",
+                  "rationale": "Anne nennt die Zusammenarbeit mit Familien, eigene Standards, den Umgang mit §8a Meldungen bei Gefährdungen (z.B. blaue Flecken) und die Kooperation mit dem Jugendamt als wichtigen Aspekt des Schutzes in der Familie. ",
+                  "isCorrect": true
+                },
+                {
+                  "text": "Eltern dürfen keine Informationen über den Zustand ihrer Kinder erhalten.",
+                  "rationale": "Das Gegenteil ist der Fall; die Zusammenarbeit und der Austausch sind entscheidend.",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Familien sind ausschließlich für den Schutz ihrer Kinder zuständig, ohne Einmischung der Tagespflege.",
+                  "rationale": "Anne betont die Zusammenarbeit und die Rolle der Tagespflege bei der Überwachung des Kindeswohls, wie bei §8a Meldungen.",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Es geht nur darum, regelmäßige Elterngespräche zu führen, ohne tiefergehende Themen anzusprechen.",
+                  "rationale": "Während Elterngespräche wichtig sind, geht es laut Anne auch um sensible Themen wie Kindeswohlgefährdung und gesetzliche Meldepflichten.",
+                  "isCorrect": false
+                }
+              ]
+            },
+            {
+              "question": "Welches unangenehme, aber wichtige Thema spricht Anne im Kontext des Schutzes in der Einrichtung an, das die Kindertagespflegepersonen selbst betrifft? 🚧",
+              "hint": "Anne fragt, wie man sicherstellt, dass eigene Fehler aufgearbeitet werden. 🔍",
+              "answerOptions": [
+                {
+                  "text": "Die Möglichkeit, dass Erwachsene selbst übergriffig sein können (z.B. zu laut, zu ruppig), und die Notwendigkeit, dies aufzuarbeiten.",
+                  "rationale": "Anne thematisiert die schwierige Frage, ob auch Erwachsene (Kindertagespflegepersonen) mal übergriffig sein können und wie solche Vorfälle aufgearbeitet und eine Feedbackkultur gewährleistet werden kann. ",
+                  "isCorrect": true
+                },
+                {
+                  "text": "Das strikte Verbot von Personalfehlern in der Betreuung.",
+                  "rationale": "Anne spricht die Realität an, dass Fehler passieren können, und betont die Aufarbeitung, nicht ein unrealistisches Verbot.",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Die Notwendigkeit, alle Konflikte intern zu lösen, ohne externe Hilfe.",
+                  "rationale": "Anne erwähnt den Austausch mit dem Jugendamt und Bekannten in der Kindertagespflege als Teil der Feedbackkultur.",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Die alleinige Verantwortung der Kinder für ihr Verhalten.",
+                  "rationale": "Anne lenkt den Fokus auf die Verantwortung der Erwachsenen und deren Umgang mit eigenen Fehlern.",
+                  "isCorrect": false
+                }
+              ]
+            }
+          ]
+        };
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+
+        const quizContainer = document.getElementById('quiz-container');
+
+        function displayQuestion(questionData) {
+            quizContainer.innerHTML = ''; // Vorherigen Inhalt löschen
+
+            const questionElement = document.createElement('h3');
+            questionElement.textContent = questionData.question;
+            quizContainer.appendChild(questionElement);
+
+            const hintElement = document.createElement('p');
+            hintElement.textContent = `Tipp: ${questionData.hint}`;
+            hintElement.style.fontStyle = 'italic';
+            hintElement.style.fontSize = '0.9em';
+            hintElement.style.color = '#666';
+            quizContainer.appendChild(hintElement);
+
+            questionData.answerOptions.forEach((option, index) => {
+                const optionButton = document.createElement('button');
+                optionButton.textContent = option.text;
+                optionButton.onclick = () => checkAnswer(option, optionButton);
+                quizContainer.appendChild(optionButton);
+            });
+        }
+
+        function checkAnswer(selectedOption, buttonElement) {
+            const allButtons = quizContainer.querySelectorAll('button');
+            allButtons.forEach(button => {
+                button.disabled = true; // Alle Buttons deaktivieren, nachdem eine Antwort gewählt wurde
+            });
+
+            if (selectedOption.isCorrect) {
+                score++;
+                buttonElement.classList.add('correct-answer');
+            } else {
+                buttonElement.classList.add('wrong-answer');
+                // Die korrekte Antwort hervorheben
+                const correctAnswer = quizData.questions[currentQuestionIndex].answerOptions.find(opt => opt.isCorrect);
+                allButtons.forEach(button => {
+                    if (button.textContent === correctAnswer.text) {
+                        button.classList.add('correct-answer');
+                    }
+                });
+            }
+
+            const rationaleElement = document.createElement('p');
+            rationaleElement.classList.add('rationale');
+            rationaleElement.textContent = `Begründung: ${selectedOption.rationale}`;
+            quizContainer.appendChild(rationaleElement);
+
+            setTimeout(() => {
+                currentQuestionIndex++;
+                if (currentQuestionIndex < quizData.questions.length) {
+                    displayQuestion(quizData.questions[currentQuestionIndex]);
+                } else {
+                    displayResults();
+                }
+            }, 3000); // 3 Sekunden warten, bevor zur nächsten Frage oder den Ergebnissen übergegangen wird
+        }
+
+        function displayResults() {
+            quizContainer.innerHTML = '<h2>Quiz beendet! 🎉</h2>';
+            const resultText = document.createElement('p');
+            // Duz-Form hier verwendet
+            resultText.textContent = `Du hast ${score} von ${quizData.questions.length} Fragen richtig beantwortet.`;
+            quizContainer.appendChild(resultText);
+
+            if (score === quizData.questions.length) {
+                const perfectScoreMessage = document.createElement('p');
+                perfectScoreMessage.textContent = 'Herzlichen Glückwunsch! Eine perfekte Punktzahl! 🏆';
+                perfectScoreMessage.style.fontWeight = 'bold';
+                perfectScoreMessage.style.color = 'green';
+                quizContainer.appendChild(perfectScoreMessage);
+            } else {
+                const encouragementMessage = document.createElement('p');
+                // Duz-Form hier verwendet
+                encouragementMessage.textContent = 'Das ist ein guter Anfang! Versuche es gleich noch einmal, um dein Wissen zu festigen. 💪';
+                encouragementMessage.style.fontWeight = 'bold';
+                encouragementMessage.style.color = '#4E1A3D'; /* Akzentfarbe */
+                quizContainer.appendChild(encouragementMessage);
+            }
+
+
+            const restartButton = document.createElement('button');
+            restartButton.id = 'restart-button'; // ID für Styling
+            restartButton.textContent = 'Quiz neu starten 🔄';
+            restartButton.onclick = () => {
+                currentQuestionIndex = 0;
+                score = 0;
+                displayQuestion(quizData.questions[currentQuestionIndex]);
+            };
+            quizContainer.appendChild(restartButton);
+        }
+
+        // Quiz starten
+        displayQuestion(quizData.questions[currentQuestionIndex]);
+    });
+    </script>
+</body>
+</html>
