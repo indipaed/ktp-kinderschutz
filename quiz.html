@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interaktives Quiz</title>
+    <style>
+      /* Optional: Grundlegendes CSS für besseres Aussehen */
+      body {
+          margin: 0;
+          padding: 20px;
+          background-color: #f4f7f6;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          min-height: 100vh;
+          box-sizing: border-box;
+      }
+      #quiz-container {
+        font-family: Arial, sans-serif;
+        max-width: 600px;
+        width: 100%; /* Stellt sicher, dass es auf kleineren Bildschirmen responsive ist */
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        background-color: #fff;
+        box-sizing: border-box; /* Stellt sicher, dass Padding und Border in der Breite enthalten sind */
+      }
+      #quiz-container h3 {
+          color: #333;
+          margin-bottom: 15px;
+      }
+      #quiz-container p {
+          color: #555;
+      }
+      #quiz-container button {
+        display: block;
+        width: 100%;
+        padding: 12px;
+        margin: 8px 0;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background: #f9f9f9;
+        cursor: pointer;
+        text-align: left;
+        font-size: 1em;
+        transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+      }
+      #quiz-container button:not(:disabled):hover {
+        background: #e0e0e0;
+        border-color: #999;
+      }
+      #quiz-container button:disabled {
+        cursor: not-allowed;
+        opacity: 0.7;
+      }
+      #quiz-container button.correct-answer {
+        background: #d4edda !important;
+        border-color: #28a745 !important;
+        color: #155724;
+      }
+      #quiz-container button.wrong-answer {
+        background: #f8d7da !important;
+        border-color: #dc3545 !important;
+        color: #721c24;
+      }
+      #quiz-container .rationale {
+        margin-top: 15px;
+        padding: 10px;
+        background: #e9ecef;
+        border-left: 5px solid #007bff;
+        color: #495057;
+        font-size: 0.9em;
+      }
+      #quiz-container #restart-button {
+        margin-top: 25px;
+        background: #007bff;
+        color: white;
+        border: none;
+        cursor: pointer;
+      }
+      #quiz-container #restart-button:hover {
+        background: #0056b3;
+      }
+    </style>
+</head>
+<body>
+
+    <div id="quiz-container">
+        </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+        // Quiz-Daten im JSON-Format
+        const quizData = {
+          "questions": [
+            {
+              "question": "Was ist laut dem Transkript die grundlegende Voraussetzung für erfolgreiches Lernen und Bildung?",
+              "hint": "Worüber spricht der Redner gleich zu Beginn als Basis für alles Weitere?",
+              "answerOptions": [
+                {
+                  "text": "Ein Gefühl von Sicherheit und Zugehörigkeit.",
+                  "rationale": "Das Transkript betont, dass Lernen und Bildung nur durch Sicherheit und das Gefühl, willkommen und wichtig zu sein, möglich sind.",
+                  "isCorrect": true
+                },
+                {
+                  "text": "Ein umfangreicher und anspruchsvoller Lehrplan.",
+                  "rationale": "Obwohl ein Lehrplan Teil der Bildung ist, wird die emotionale Sicherheit als die primäre Voraussetzung für das Lernen genannt.",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Tägliche Wiederholungen des Gelernten.",
+                  "rationale": "Wiederholung ist eine Lernmethode, aber das Transkript nennt eine andere, fundamentalere Bedingung, die zuerst erfüllt sein muss.",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Besonders moderne und teure Spielzeuge.",
+                  "rationale": "Materielle Ausstattung wird nicht als der entscheidende Faktor für die Lernfähigkeit eines Kindes hervorgehoben.",
+                  "isCorrect": false
+                }
+              ]
+            },
+            {
+              "question": "Welche Gesetzesgrundlage wird im Transkript explizit als Verpflichtung zum Kinderschutz genannt?",
+              "hint": "Der Redner erwähnt ein Gesetz, das kürzlich Änderungen erfahren hat.",
+              "answerOptions": [
+                {
+                  "text": "Das Bürgerliche Gesetzbuch (BGB).",
+                  "rationale": "Das BGB ist ein zentrales deutsches Gesetz, aber für den spezifischen Kontext des Kinderschutzes in Einrichtungen wird ein anderes Gesetz genannt.",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Die UN-Kinderrechtskonvention.",
+                  "rationale": "Die UN-Kinderrechtskonvention ist zwar international relevant, im Transkript wird jedoch auf ein spezifisches deutsches Gesetz verwiesen.",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Das Kinder- und Jugendstärkungsgesetz.",
+                  "rationale": "Dieses Gesetz wird namentlich erwähnt als die Vorschrift, die zum Kinderschutz verpflichtet.",
+                  "isCorrect": true
+                },
+                {
+                  "text": "Das Schulgesetz des jeweiligen Bundeslandes.",
+                  "rationale": "Das Schulgesetz regelt den Betrieb von Schulen, doch hier wird eine andere, für die Jugendhilfe relevante Gesetzesgrundlage zitiert.",
+                  "isCorrect": false
+                }
+              ]
+            },
+            {
+              "question": "Was ist eine Kindertagespflege laut dem Transkript ausdrücklich nicht?",
+              "hint": "Wie grenzt der Sprecher die Einrichtung von einer reinen Aufbewahrung ab?",
+              "answerOptions": [
+                {
+                  "text": "Ein Ort mit einem klaren Bildungsauftrag.",
+                  "rationale": "Das Transkript stellt klar, dass Kindertagespflegen sehr wohl einen Bildungsauftrag haben.",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Eine reine Verwahranstalt.",
+                  "rationale": "Der Sprecher betont, dass es sich nicht um eine bloße Verwahranstalt handelt, da ein Bildungsauftrag besteht.",
+                  "isCorrect": true
+                },
+                {
+                  "text": "Ein sicherer Ort für Kinder.",
+                  "rationale": "Das Ziel ist es gerade, ein sicherer Ort für Kinder zu sein; dies ist der zentrale Punkt des Vortrags.",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Ein Platz für die Entwicklung sozialer Fähigkeiten.",
+                  "rationale": "Soziales Lernen ist ein wichtiger Teil des Bildungsauftrags und der Entwicklung in der Kindertagespflege.",
+                  "isCorrect": false
+                }
+              ]
+            },
+            {
+              "question": "Aus welcher ethisch-moralischen Überzeugung heraus sollte laut dem Sprecher Sicherheit für Kinder gewährleistet werden?",
+              "hint": "Was ist der grundlegende Antrieb, der über reine Vorschriften hinausgeht?",
+              "answerOptions": [
+                {
+                  "text": "Weil es den Ruf der Einrichtung verbessert.",
+                  "rationale": "Ein guter Ruf kann ein Nebeneffekt sein, aber der Sprecher nennt eine intrinsische, moralische Motivation als Hauptgrund.",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Weil es richtig und wichtig ist, und Kinder sich nicht selbst wehren können.",
+                  "rationale": "Der Sprecher begründet die ethische Verpflichtung damit, dass Kinderschutz an sich richtig ist und Kinder auf diesen Schutz angewiesen sind.",
+                  "isCorrect": true
+                },
+                {
+                  "text": "Weil die Eltern dies vertraglich einfordern.",
+                  "rationale": "Vertragliche Pflichten sind eine Sache, der Sprecher argumentiert hier aber aus einer ethischen Perspektive.",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Weil es die staatliche Finanzierung sichert.",
+                  "rationale": "Finanzielle Aspekte werden nicht als Teil der ethisch-moralischen Zielsetzung im Transkript genannt.",
+                  "isCorrect": false
+                }
+              ]
+            },
+            {
+              "question": "Wie wird die Rolle der Erwachsenen in Bezug auf den Schutz der Kinder am Ende des Transkripts beschrieben?",
+              "hint": "Der Sprecher verwendet einen Begriff aus dem juristischen Bereich, um die Verantwortung zu beschreiben.",
+              "answerOptions": [
+                {
+                  "text": "Als reine Beobachter des Geschehens.",
+                  "rationale": "Diese Beschreibung wäre passiv, während das Transkript eine sehr aktive und verantwortungsvolle Rolle fordert.",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Als Spielkameraden und Freunde.",
+                  "rationale": "Eine freundschaftliche Beziehung ist gut, aber der verwendete Begriff beschreibt eine spezifischere Schutz- und Vertretungsfunktion.",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Als Anwältinnen und Anwälte der Kinder.",
+                  "rationale": "Der Begriff 'Anwältinnen dieser Kinder' wird explizit verwendet, um die Aufgabe zu beschreiben, für die Rechte und die Sicherheit der Kinder einzutreten.",
+                  "isCorrect": true
+                },
+                {
+                  "text": "Als strenge Autoritätspersonen.",
+                  "rationale": "Der Fokus des Transkripts liegt auf Sicherheit und Fürsorge, nicht auf der Ausübung von strenger Autorität.",
+                  "isCorrect": false
+                }
+              ]
+            }
+          ]
+        };
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+
+        const quizContainer = document.getElementById('quiz-container');
+
+        function displayQuestion(questionData) {
+            quizContainer.innerHTML = ''; // Vorherigen Inhalt löschen
+
+            const questionElement = document.createElement('h3');
+            questionElement.textContent = questionData.question;
+            quizContainer.appendChild(questionElement);
+
+            const hintElement = document.createElement('p');
+            hintElement.textContent = `Tipp: ${questionData.hint}`;
+            hintElement.style.fontStyle = 'italic';
+            hintElement.style.fontSize = '0.9em';
+            hintElement.style.color = '#666';
+            quizContainer.appendChild(hintElement);
+
+            questionData.answerOptions.forEach((option, index) => {
+                const optionButton = document.createElement('button');
+                optionButton.textContent = option.text;
+                optionButton.onclick = () => checkAnswer(option, optionButton);
+                quizContainer.appendChild(optionButton);
+            });
+        }
+
+        function checkAnswer(selectedOption, buttonElement) {
+            const allButtons = quizContainer.querySelectorAll('button');
+            allButtons.forEach(button => {
+                button.disabled = true; // Alle Buttons deaktivieren, nachdem eine Antwort gewählt wurde
+            });
+
+            if (selectedOption.isCorrect) {
+                score++;
+                buttonElement.classList.add('correct-answer');
+            } else {
+                buttonElement.classList.add('wrong-answer');
+                // Die korrekte Antwort hervorheben
+                const correctAnswer = quizData.questions[currentQuestionIndex].answerOptions.find(opt => opt.isCorrect);
+                allButtons.forEach(button => {
+                    if (button.textContent === correctAnswer.text) {
+                        button.classList.add('correct-answer');
+                    }
+                });
+            }
+
+            const rationaleElement = document.createElement('p');
+            rationaleElement.classList.add('rationale');
+            rationaleElement.textContent = `Begründung: ${selectedOption.rationale}`;
+            quizContainer.appendChild(rationaleElement);
+
+            setTimeout(() => {
+                currentQuestionIndex++;
+                if (currentQuestionIndex < quizData.questions.length) {
+                    displayQuestion(quizData.questions[currentQuestionIndex]);
+                } else {
+                    displayResults();
+                }
+            }, 3000); // 3 Sekunden warten, bevor zur nächsten Frage oder den Ergebnissen übergegangen wird
+        }
+
+        function displayResults() {
+            quizContainer.innerHTML = '<h2>Quiz beendet!</h2>';
+            const resultText = document.createElement('p');
+            resultText.textContent = `Sie haben ${score} von ${quizData.questions.length} Fragen richtig beantwortet.`;
+            quizContainer.appendChild(resultText);
+
+            if (score === quizData.questions.length) {
+                const perfectScoreMessage = document.createElement('p');
+                perfectScoreMessage.textContent = 'Herzlichen Glückwunsch! Eine perfekte Punktzahl!';
+                perfectScoreMessage.style.fontWeight = 'bold';
+                perfectScoreMessage.style.color = 'green';
+                quizContainer.appendChild(perfectScoreMessage);
+            }
+
+            const restartButton = document.createElement('button');
+            restartButton.id = 'restart-button'; // ID für Styling
+            restartButton.textContent = 'Quiz neu starten';
+            restartButton.onclick = () => {
+                currentQuestionIndex = 0;
+                score = 0;
+                displayQuestion(quizData.questions[currentQuestionIndex]);
+            };
+            quizContainer.appendChild(restartButton);
+        }
+
+        // Quiz starten
+        displayQuestion(quizData.questions[currentQuestionIndex]);
+    });
+    </script>
+</body>
+</html>
