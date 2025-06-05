@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Interaktives Quiz</title>
     <style>
-      /* Optional: Grundlegendes CSS für besseres Aussehen */
+      /* Grundlegendes CSS für besseres Aussehen */
       body {
           margin: 0;
           padding: 20px;
-          background-color: #f4f7f6;
+          background-color: #FFFBE6; /* Hintergrundfarbe: FFFBE6 */
           display: flex;
           justify-content: center;
           align-items: center;
@@ -19,16 +19,16 @@
       #quiz-container {
         font-family: Arial, sans-serif;
         max-width: 600px;
-        width: 100%; /* Stellt sicher, dass es auf kleineren Bildschirmen responsive ist */
+        width: 100%;
         padding: 20px;
         border: 1px solid #ddd;
         border-radius: 8px;
         box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         background-color: #fff;
-        box-sizing: border-box; /* Stellt sicher, dass Padding und Border in der Breite enthalten sind */
+        box-sizing: border-box;
       }
       #quiz-container h3 {
-          color: #333;
+          color: #4E1A3D; /* Akzentfarbe für Fragen: 4E1A3D */
           margin-bottom: 15px;
       }
       #quiz-container p {
@@ -69,19 +69,19 @@
         margin-top: 15px;
         padding: 10px;
         background: #e9ecef;
-        border-left: 5px solid #007bff;
+        border-left: 5px solid #4E1A3D; /* Akzentfarbe für Begründungs-Rand: 4E1A3D */
         color: #495057;
         font-size: 0.9em;
       }
       #quiz-container #restart-button {
         margin-top: 25px;
-        background: #007bff;
+        background: #4E1A3D; /* Akzentfarbe für Restart-Button: 4E1A3D */
         color: white;
         border: none;
         cursor: pointer;
       }
       #quiz-container #restart-button:hover {
-        background: #0056b3;
+        background: #3a132c; /* Dunklere Akzentfarbe beim Hover */
       }
     </style>
 </head>
@@ -96,74 +96,74 @@
         const quizData = {
           "questions": [
             {
-              "question": "Was ist laut dem Transkript die grundlegende Voraussetzung für erfolgreiches Lernen und Bildung?",
-              "hint": "Worüber spricht der Redner gleich zu Beginn als Basis für alles Weitere?",
+              "question": "Was ist laut Anne die grundlegende Voraussetzung für erfolgreiches Lernen und Bildung? 📚",
+              "hint": "Worüber spricht Anne gleich zu Beginn als Basis für alles Weitere? 🤔",
               "answerOptions": [
                 {
                   "text": "Ein Gefühl von Sicherheit und Zugehörigkeit.",
-                  "rationale": "Das Transkript betont, dass Lernen und Bildung nur durch Sicherheit und das Gefühl, willkommen und wichtig zu sein, möglich sind.",
+                  "rationale": "Anne betont, dass Lernen und Bildung nur durch Sicherheit und das Gefühl, willkommen und wichtig zu sein, möglich sind. ",
                   "isCorrect": true
                 },
                 {
                   "text": "Ein umfangreicher und anspruchsvoller Lehrplan.",
-                  "rationale": "Obwohl ein Lehrplan Teil der Bildung ist, wird die emotionale Sicherheit als die primäre Voraussetzung für das Lernen genannt.",
+                  "rationale": "Obwohl ein Lehrplan wichtig ist, hebt Anne die emotionale Sicherheit als die primäre Voraussetzung für das Lernen hervor.",
                   "isCorrect": false
                 },
                 {
                   "text": "Tägliche Wiederholungen des Gelernten.",
-                  "rationale": "Wiederholung ist eine Lernmethode, aber das Transkript nennt eine andere, fundamentalere Bedingung, die zuerst erfüllt sein muss.",
+                  "rationale": "Wiederholung ist eine Lernmethode, aber Anne nennt eine andere, fundamentalere Bedingung, die zuerst erfüllt sein muss.",
                   "isCorrect": false
                 },
                 {
                   "text": "Besonders moderne und teure Spielzeuge.",
-                  "rationale": "Materielle Ausstattung wird nicht als der entscheidende Faktor für die Lernfähigkeit eines Kindes hervorgehoben.",
+                  "rationale": "Materielle Ausstattung wird von Anne nicht als der entscheidende Faktor für die Lernfähigkeit eines Kindes genannt.",
                   "isCorrect": false
                 }
               ]
             },
             {
-              "question": "Welche Gesetzesgrundlage wird im Transkript explizit als Verpflichtung zum Kinderschutz genannt?",
-              "hint": "Der Redner erwähnt ein Gesetz, das kürzlich Änderungen erfahren hat.",
+              "question": "Welche Gesetzesgrundlage wird laut Anne explizit als Verpflichtung zum Kinderschutz genannt? ⚖️",
+              "hint": "Anne erwähnt ein Gesetz, das kürzlich Änderungen erfahren hat. 📖",
               "answerOptions": [
                 {
                   "text": "Das Bürgerliche Gesetzbuch (BGB).",
-                  "rationale": "Das BGB ist ein zentrales deutsches Gesetz, aber für den spezifischen Kontext des Kinderschutzes in Einrichtungen wird ein anderes Gesetz genannt.",
+                  "rationale": "Das BGB ist ein zentrales deutsches Gesetz, aber Anne verweist für den spezifischen Kontext des Kinderschutzes in Einrichtungen auf ein anderes Gesetz.",
                   "isCorrect": false
                 },
                 {
                   "text": "Die UN-Kinderrechtskonvention.",
-                  "rationale": "Die UN-Kinderrechtskonvention ist zwar international relevant, im Transkript wird jedoch auf ein spezifisches deutsches Gesetz verwiesen.",
+                  "rationale": "Die UN-Kinderrechtskonvention ist zwar international relevant, Anne zitiert jedoch ein spezifisches deutsches Gesetz im Transkript. ",
                   "isCorrect": false
                 },
                 {
                   "text": "Das Kinder- und Jugendstärkungsgesetz.",
-                  "rationale": "Dieses Gesetz wird namentlich erwähnt als die Vorschrift, die zum Kinderschutz verpflichtet.",
+                  "rationale": "Dieses Gesetz wird von Anne namentlich erwähnt als die Vorschrift, die zum Kinderschutz verpflichtet. ",
                   "isCorrect": true
                 },
                 {
                   "text": "Das Schulgesetz des jeweiligen Bundeslandes.",
-                  "rationale": "Das Schulgesetz regelt den Betrieb von Schulen, doch hier wird eine andere, für die Jugendhilfe relevante Gesetzesgrundlage zitiert.",
+                  "rationale": "Das Schulgesetz regelt den Betrieb von Schulen, aber Anne zitiert eine andere, für die Jugendhilfe relevante Gesetzesgrundlage.",
                   "isCorrect": false
                 }
               ]
             },
             {
-              "question": "Was ist eine Kindertagespflege laut dem Transkript ausdrücklich nicht?",
-              "hint": "Wie grenzt der Sprecher die Einrichtung von einer reinen Aufbewahrung ab?",
+              "question": "Was ist eine Kindertagespflege laut Anne ausdrücklich NICHT? 🚫",
+              "hint": "Wie grenzt Anne die Einrichtung von einer reinen Aufbewahrung ab? 💡",
               "answerOptions": [
                 {
                   "text": "Ein Ort mit einem klaren Bildungsauftrag.",
-                  "rationale": "Das Transkript stellt klar, dass Kindertagespflegen sehr wohl einen Bildungsauftrag haben.",
+                  "rationale": "Anne stellt klar, dass Kindertagespflegen sehr wohl einen Bildungsauftrag haben. ",
                   "isCorrect": false
                 },
                 {
                   "text": "Eine reine Verwahranstalt.",
-                  "rationale": "Der Sprecher betont, dass es sich nicht um eine bloße Verwahranstalt handelt, da ein Bildungsauftrag besteht.",
+                  "rationale": "Anne betont, dass es sich nicht um eine bloße Verwahranstalt handelt, da ein Bildungsauftrag besteht. ",
                   "isCorrect": true
                 },
                 {
                   "text": "Ein sicherer Ort für Kinder.",
-                  "rationale": "Das Ziel ist es gerade, ein sicherer Ort für Kinder zu sein; dies ist der zentrale Punkt des Vortrags.",
+                  "rationale": "Das Ziel ist es gerade, ein sicherer Ort für Kinder zu sein; dies ist der zentrale Punkt von Annes Vortrag. ",
                   "isCorrect": false
                 },
                 {
@@ -174,53 +174,53 @@
               ]
             },
             {
-              "question": "Aus welcher ethisch-moralischen Überzeugung heraus sollte laut dem Sprecher Sicherheit für Kinder gewährleistet werden?",
-              "hint": "Was ist der grundlegende Antrieb, der über reine Vorschriften hinausgeht?",
+              "question": "Aus welcher ethisch-moralischen Überzeugung heraus sollte laut Anne Sicherheit für Kinder gewährleistet werden? ❤️",
+              "hint": "Was ist Annes grundlegender Antrieb, der über reine Vorschriften hinausgeht? ✨",
               "answerOptions": [
                 {
                   "text": "Weil es den Ruf der Einrichtung verbessert.",
-                  "rationale": "Ein guter Ruf kann ein Nebeneffekt sein, aber der Sprecher nennt eine intrinsische, moralische Motivation als Hauptgrund.",
+                  "rationale": "Ein guter Ruf kann ein Nebeneffekt sein, aber Anne nennt eine intrinsische, moralische Motivation als Hauptgrund.",
                   "isCorrect": false
                 },
                 {
                   "text": "Weil es richtig und wichtig ist, und Kinder sich nicht selbst wehren können.",
-                  "rationale": "Der Sprecher begründet die ethische Verpflichtung damit, dass Kinderschutz an sich richtig ist und Kinder auf diesen Schutz angewiesen sind.",
+                  "rationale": "Anne begründet die ethische Verpflichtung damit, dass Kinderschutz an sich richtig ist und Kinder auf diesen Schutz angewiesen sind. ",
                   "isCorrect": true
                 },
                 {
                   "text": "Weil die Eltern dies vertraglich einfordern.",
-                  "rationale": "Vertragliche Pflichten sind eine Sache, der Sprecher argumentiert hier aber aus einer ethischen Perspektive.",
+                  "rationale": "Vertragliche Pflichten sind eine Sache, Anne argumentiert hier aber aus einer ethischen Perspektive.",
                   "isCorrect": false
                 },
                 {
                   "text": "Weil es die staatliche Finanzierung sichert.",
-                  "rationale": "Finanzielle Aspekte werden nicht als Teil der ethisch-moralischen Zielsetzung im Transkript genannt.",
+                  "rationale": "Finanzielle Aspekte werden von Anne nicht als Teil der ethisch-moralischen Zielsetzung im Transkript genannt.",
                   "isCorrect": false
                 }
               ]
             },
             {
-              "question": "Wie wird die Rolle der Erwachsenen in Bezug auf den Schutz der Kinder am Ende des Transkripts beschrieben?",
-              "hint": "Der Sprecher verwendet einen Begriff aus dem juristischen Bereich, um die Verantwortung zu beschreiben.",
+              "question": "Wie wird die Rolle der Erwachsenen in Bezug auf den Schutz der Kinder laut Anne beschrieben? 🛡️",
+              "hint": "Anne verwendet einen Begriff aus dem juristischen Bereich, um die Verantwortung zu beschreiben. 🧑‍⚖️",
               "answerOptions": [
                 {
-                  "text": "Als reine Beobachter des Geschehens.",
-                  "rationale": "Diese Beschreibung wäre passiv, während das Transkript eine sehr aktive und verantwortungsvolle Rolle fordert.",
+                  "text": "Als reine Beobachter:innen des Geschehens.",
+                  "rationale": "Diese Beschreibung wäre passiv, während Anne eine sehr aktive und verantwortungsvolle Rolle fordert.",
                   "isCorrect": false
                 },
                 {
-                  "text": "Als Spielkameraden und Freunde.",
-                  "rationale": "Eine freundschaftliche Beziehung ist gut, aber der verwendete Begriff beschreibt eine spezifischere Schutz- und Vertretungsfunktion.",
+                  "text": "Als Spielkamerad:innen und Freund:innen.",
+                  "rationale": "Eine freundschaftliche Beziehung ist gut, aber der von Anne verwendete Begriff beschreibt eine spezifischere Schutz- und Vertretungsfunktion. ",
                   "isCorrect": false
                 },
                 {
-                  "text": "Als Anwältinnen und Anwälte der Kinder.",
-                  "rationale": "Der Begriff 'Anwältinnen dieser Kinder' wird explizit verwendet, um die Aufgabe zu beschreiben, für die Rechte und die Sicherheit der Kinder einzutreten.",
+                  "text": "Als Anwält:innen dieser Kinder.",
+                  "rationale": "Der Begriff 'Anwält:innen dieser Kinder' wird von Anne explizit verwendet, um die Aufgabe zu beschreiben, für die Rechte und die Sicherheit der Kinder einzutreten. ",
                   "isCorrect": true
                 },
                 {
                   "text": "Als strenge Autoritätspersonen.",
-                  "rationale": "Der Fokus des Transkripts liegt auf Sicherheit und Fürsorge, nicht auf der Ausübung von strenger Autorität.",
+                  "rationale": "Der Fokus von Annes Transkript liegt auf Sicherheit und Fürsorge, nicht auf der Ausübung von strenger Autorität.",
                   "isCorrect": false
                 }
               ]
@@ -291,14 +291,14 @@
         }
 
         function displayResults() {
-            quizContainer.innerHTML = '<h2>Quiz beendet!</h2>';
+            quizContainer.innerHTML = '<h2>Quiz beendet! 🎉</h2>';
             const resultText = document.createElement('p');
             resultText.textContent = `Sie haben ${score} von ${quizData.questions.length} Fragen richtig beantwortet.`;
             quizContainer.appendChild(resultText);
 
             if (score === quizData.questions.length) {
                 const perfectScoreMessage = document.createElement('p');
-                perfectScoreMessage.textContent = 'Herzlichen Glückwunsch! Eine perfekte Punktzahl!';
+                perfectScoreMessage.textContent = 'Herzlichen Glückwunsch! Eine perfekte Punktzahl! 🏆';
                 perfectScoreMessage.style.fontWeight = 'bold';
                 perfectScoreMessage.style.color = 'green';
                 quizContainer.appendChild(perfectScoreMessage);
@@ -306,7 +306,7 @@
 
             const restartButton = document.createElement('button');
             restartButton.id = 'restart-button'; // ID für Styling
-            restartButton.textContent = 'Quiz neu starten';
+            restartButton.textContent = 'Quiz neu starten 🔄';
             restartButton.onclick = () => {
                 currentQuestionIndex = 0;
                 score = 0;
