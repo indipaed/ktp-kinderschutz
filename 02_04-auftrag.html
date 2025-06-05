@@ -19,16 +19,16 @@
       #quiz-container {
         font-family: Arial, sans-serif;
         max-width: 600px;
-        width: 100%;
+        width: 100%; /* Stellt sicher, dass es auf kleineren Bildschirmen responsive ist */
         padding: 20px;
         border: 1px solid #ddd;
         border-radius: 8px;
         box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         background-color: #fff;
-        box-sizing: border-box;
+        box-sizing: border-box; /* Stellt sicher, dass Padding und Border in der Breite enthalten sind */
       }
       #quiz-container h3 {
-          color: #4E1A3D; /* Akzentfarbe für Fragen: 4E1A3D */
+          color: #212121; /* Farbe der Fragen: #212121 */
           margin-bottom: 15px;
       }
       #quiz-container p {
@@ -101,7 +101,7 @@
               "answerOptions": [
                 {
                   "text": "Ein Gefühl von Sicherheit und Zugehörigkeit.",
-                  "rationale": "Anne betont, dass Lernen und Bildung nur durch Sicherheit und das Gefühl, willkommen und wichtig zu sein, möglich sind. ",
+                  "rationale": "Anne betont, dass Lernen und Bildung nur durch Sicherheit und das Gefühl, willkommen und wichtig zu sein, möglich sind.",
                   "isCorrect": true
                 },
                 {
@@ -132,17 +132,17 @@
                 },
                 {
                   "text": "Die UN-Kinderrechtskonvention.",
-                  "rationale": "Die UN-Kinderrechtskonvention ist zwar international relevant, Anne zitiert jedoch ein spezifisches deutsches Gesetz im Transkript. ",
+                  "rationale": "Die UN-Kinderrechtskonvention ist zwar international relevant, Anne zitiert jedoch ein spezifisches deutsches Gesetz im Transkript.",
                   "isCorrect": false
                 },
                 {
                   "text": "Das Kinder- und Jugendstärkungsgesetz.",
-                  "rationale": "Dieses Gesetz wird von Anne namentlich erwähnt als die Vorschrift, die zum Kinderschutz verpflichtet. ",
+                  "rationale": "Dieses Gesetz wird von Anne namentlich erwähnt als die Vorschrift, die zum Kinderschutz verpflichtet.",
                   "isCorrect": true
                 },
                 {
                   "text": "Das Schulgesetz des jeweiligen Bundeslandes.",
-                  "rationale": "Das Schulgesetz regelt den Betrieb von Schulen, aber Anne zitiert eine andere, für die Jugendhilfe relevante Gesetzesgrundlage.",
+                  "rationale": "Das Schulgesetz regelt den Betrieb von Schulen, doch Anne zitiert eine andere, für die Jugendhilfe relevante Gesetzesgrundlage.",
                   "isCorrect": false
                 }
               ]
@@ -153,17 +153,17 @@
               "answerOptions": [
                 {
                   "text": "Ein Ort mit einem klaren Bildungsauftrag.",
-                  "rationale": "Anne stellt klar, dass Kindertagespflegen sehr wohl einen Bildungsauftrag haben. ",
+                  "rationale": "Anne stellt klar, dass Kindertagespflegen sehr wohl einen Bildungsauftrag haben.",
                   "isCorrect": false
                 },
                 {
                   "text": "Eine reine Verwahranstalt.",
-                  "rationale": "Anne betont, dass es sich nicht um eine bloße Verwahranstalt handelt, da ein Bildungsauftrag besteht. ",
+                  "rationale": "Anne betont, dass es sich nicht um eine bloße Verwahranstalt handelt, da ein Bildungsauftrag besteht.",
                   "isCorrect": true
                 },
                 {
                   "text": "Ein sicherer Ort für Kinder.",
-                  "rationale": "Das Ziel ist es gerade, ein sicherer Ort für Kinder zu sein; dies ist der zentrale Punkt von Annes Vortrag. ",
+                  "rationale": "Das Ziel ist es gerade, ein sicherer Ort für Kinder zu sein; dies ist der zentrale Punkt von Annes Vortrag.",
                   "isCorrect": false
                 },
                 {
@@ -184,7 +184,7 @@
                 },
                 {
                   "text": "Weil es richtig und wichtig ist, und Kinder sich nicht selbst wehren können.",
-                  "rationale": "Anne begründet die ethische Verpflichtung damit, dass Kinderschutz an sich richtig ist und Kinder auf diesen Schutz angewiesen sind. ",
+                  "rationale": "Anne begründet die ethische Verpflichtung damit, dass Kinderschutz an sich richtig ist und Kinder auf diesen Schutz angewiesen sind.",
                   "isCorrect": true
                 },
                 {
@@ -210,12 +210,12 @@
                 },
                 {
                   "text": "Als Spielkamerad:innen und Freund:innen.",
-                  "rationale": "Eine freundschaftliche Beziehung ist gut, aber der von Anne verwendete Begriff beschreibt eine spezifischere Schutz- und Vertretungsfunktion. ",
+                  "rationale": "Eine freundschaftliche Beziehung ist gut, aber der von Anne verwendete Begriff beschreibt eine spezifischere Schutz- und Vertretungsfunktion.",
                   "isCorrect": false
                 },
                 {
                   "text": "Als Anwält:innen dieser Kinder.",
-                  "rationale": "Der Begriff 'Anwält:innen dieser Kinder' wird von Anne explizit verwendet, um die Aufgabe zu beschreiben, für die Rechte und die Sicherheit der Kinder einzutreten. ",
+                  "rationale": "Der Begriff 'Anwält:innen dieser Kinder' wird von Anne explizit verwendet, um die Aufgabe zu beschreiben, für die Rechte und die Sicherheit der Kinder einzutreten.",
                   "isCorrect": true
                 },
                 {
@@ -293,7 +293,8 @@
         function displayResults() {
             quizContainer.innerHTML = '<h2>Quiz beendet! 🎉</h2>';
             const resultText = document.createElement('p');
-            resultText.textContent = `Sie haben ${score} von ${quizData.questions.length} Fragen richtig beantwortet.`;
+            // Hier wird die Duz-Form verwendet
+            resultText.textContent = `Du hast ${score} von ${quizData.questions.length} Fragen richtig beantwortet.`;
             quizContainer.appendChild(resultText);
 
             if (score === quizData.questions.length) {
