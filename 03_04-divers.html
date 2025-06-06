@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz: Sicherheit & Diversität</title>
+    <style>
+      /* Grundlegendes CSS für besseres Aussehen */
+      body {
+          margin: 0;
+          padding: 20px;
+          background-color: #FFFBE6; /* Hintergrundfarbe: FFFBE6 */
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          min-height: 100vh;
+          box-sizing: border-box;
+      }
+      #quiz-container {
+        font-family: Arial, sans-serif;
+        max-width: 600px;
+        width: 100%; /* Stellt sicher, dass es auf kleineren Bildschirmen responsive ist */
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        background-color: #fff;
+        box-sizing: border-box; /* Stellt sicher, dass Padding und Border in der Breite enthalten sind */
+      }
+      #quiz-container h3 {
+          color: #212121; /* Farbe der Fragen: #212121 */
+          margin-bottom: 15px;
+      }
+      #quiz-container p {
+          color: #555;
+      }
+      #quiz-container button {
+        display: block;
+        width: 100%;
+        padding: 12px;
+        margin: 8px 0;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background: #f9f9f9;
+        cursor: pointer;
+        text-align: left;
+        font-size: 1em;
+        transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+      }
+      #quiz-container button:not(:disabled):hover {
+        background: #e0e0e0;
+        border-color: #999;
+      }
+      #quiz-container button:disabled {
+        cursor: not-allowed;
+        opacity: 0.7;
+      }
+      #quiz-container button.correct-answer {
+        background: #d4edda !important;
+        border-color: #28a745 !important;
+        color: #155724;
+      }
+      #quiz-container button.wrong-answer {
+        background: #f8d7da !important;
+        border-color: #dc3545 !important;
+        color: #721c24;
+      }
+      #quiz-container .rationale {
+        margin-top: 15px;
+        padding: 10px;
+        background: #e9ecef;
+        border-left: 5px solid #4E1A3D; /* Akzentfarbe für Begründungs-Rand: 4E1A3D */
+        color: #495057;
+        font-size: 0.9em;
+      }
+      #quiz-container #restart-button {
+        margin-top: 25px;
+        background: #4E1A3D; /* Akzentfarbe für Restart-Button: 4E1A3D */
+        color: white;
+        border: none;
+        cursor: pointer;
+      }
+      #quiz-container #restart-button:hover {
+        background: #3a132c; /* Dunklere Akzentfarbe beim Hover */
+      }
+    </style>
+</head>
+<body>
+
+    <div id="quiz-container">
+        </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+        // Quiz-Daten im JSON-Format
+        const quizData = {
+          "questions": [
+            {
+              "question": "Was betont Anne hinsichtlich der Sicherheitsbedürfnisse und Lebenswelten von Kindern? 🌍",
+              "hint": "Anne sagt, sie sind sehr vielseitig. ✨",
+              "answerOptions": [
+                {
+                  "text": "Die Sicherheitsbedürfnisse und Lebenswelten der Kinder sind sehr divers und unterschiedlich.",
+                  "rationale": "Anne hebt hervor, dass die Sicherheitsbedürfnisse und Lebenswelten der Kinder sehr divers und unterschiedlich sind.",
+                  "isCorrect": true
+                },
+                {
+                  "text": "Alle Kinder haben die gleichen Sicherheitsbedürfnisse, unabhängig von ihrer Herkunft.",
+                  "rationale": "Falsch. Anne betont gerade die Diversität der Bedürfnisse und Lebenswelten.",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Sicherheitsbedürfnisse sind nur in Krisensituationen relevant.",
+                  "rationale": "Falsch. Sicherheitsbedürfnisse sind grundlegend für das Wohlbefinden und Lernen von Kindern, nicht nur in Krisen.",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Eltern sind allein für die Sicherheitsbedürfnisse ihrer Kinder verantwortlich.",
+                  "rationale": "Falsch. Anne spricht von den Sicherheitsbedürfnissen *der Kinder* und der Verantwortung der Bezugspersonen, diese zu erkennen und zu respektieren, was auch von Familien unterscheiden kann.",
+                  "isCorrect": false
+                }
+              ]
+            },
+            {
+              "question": "Wie sollen Bezugspersonen laut Anne mit den unterschiedlichen Nähe-Distanz-Bedürfnissen von Kindern umgehen, insbesondere beim Kuscheln? 🤗",
+              "hint": "Anne rät, zuerst zu beobachten. 👀",
+              "answerOptions": [
+                {
+                  "text": "Immer beobachten, bevor man Kinder zu sehr drückt, und respektieren, wenn Kinder nicht kuscheln wollen.",
+                  "rationale": "Anne betont, dass man immer beobachten und in einer Balance bleiben sollte, um zu respektieren, wenn Kinder nicht kuscheln wollen, bevor man sie zu sehr knuddelt.",
+                  "isCorrect": true
+                },
+                {
+                  "text": "Alle Kinder sollten zum Kuscheln ermutigt werden, um Bindung aufzubauen.",
+                  "rationale": "Falsch. Anne betont, dass nicht alle Kinder kuscheln wollen und dies respektiert werden muss.",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Die Bedürfnisse der Erwachsenen stehen beim Kuscheln im Vordergrund.",
+                  "rationale": "Falsch. Anne hebt hervor, dass die Bedürfnisse der Kinder und ihre Grenzen entscheidend sind, auch in Bezug auf die Machtdynamik.",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Man sollte Kinder immer drücken, da sie es als Zeichen der Zuneigung verstehen.",
+                  "rationale": "Falsch. Anne warnt davor, Kinder zu sehr zu knuddeln, ohne ihre Wünsche zu beachten, und betont die Wichtigkeit der Beobachtung.",
+                  "isCorrect": false
+                }
+              ]
+            },
+            {
+              "question": "Welchen wichtigen Aspekt der Machtdynamik betont Anne im Verhältnis zwischen Erwachsenen und Kindern? 💪",
+              "hint": "Anne erinnert uns an die körperlichen Unterschiede. 📏",
+              "answerOptions": [
+                {
+                  "text": "Erwachsene sind größer, wuchtiger und stärker, und müssen dies reflektieren, da sie nicht die Eltern sind.",
+                  "rationale": "Anne weist darauf hin, dass Erwachsene größer, wuchtiger und stärker sind und dass es umso wichtiger ist, dies zu reflektieren und sich als Familien unterstützend, aber nicht als Familie zu sehen.",
+                  "isCorrect": true
+                },
+                {
+                  "text": "Kinder haben immer die Macht, Grenzen zu setzen, und Erwachsene müssen sich anpassen.",
+                  "rationale": "Falsch. Anne betont die Macht der Erwachsenen und deren Verantwortung, diese Macht bewusst einzusetzen.",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Macht spielt im Umgang mit Kindern keine Rolle.",
+                  "rationale": "Falsch. Anne stellt die Frage nach der Macht und betont deren Bedeutung in der Interaktion.",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Die Macht der Erwachsenen legitimiert jede Handlung zum Schutz des Kindes.",
+                  "rationale": "Falsch. Anne spricht von Reflexion und dem Unterschied zur elterlichen Rolle, nicht von einer Legitimation beliebiger Handlungen.",
+                  "isCorrect": false
+                }
+              ]
+            },
+            {
+              "question": "Welches Beispiel gibt Anne, um zu verdeutlichen, wie man Kindern klare Grenzen setzt, auch bei vermeintlich liebevollen Gesten? ✋",
+              "hint": "Anne spricht über die Interaktion mit U3-Kindern. 👶",
+              "answerOptions": [
+                {
+                  "text": "Wenn U3-Kinder die Brust streicheln wollen, klar sagen: 'Nein, bei mir nicht, das kannst du bei Mama machen.'",
+                  "rationale": "Anne nennt das Beispiel, dass U3-Kinder manchmal die Brust streicheln wollen und betont, wie wichtig es ist, klar 'Nein' zu sagen und zu kommunizieren, dass dies bei der Bezugsperson nicht in Ordnung ist, aber bei der Mama.",
+                  "isCorrect": true
+                },
+                {
+                  "text": "Man sollte solche Gesten immer zulassen, um die Bindung zu stärken.",
+                  "rationale": "Falsch. Anne betont die Notwendigkeit, hier klare Grenzen zu setzen, auch wenn die Geste scheinbar liebevoll ist.",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Man sollte die Kinder ignorieren, wenn sie unangemessene Gesten machen.",
+                  "rationale": "Falsch. Ignorieren sendet keine klare Botschaft; Anne plädiert für klare Kommunikation der Grenzen.",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Man sollte die Eltern bitten, den Kindern solches Verhalten abzugewöhnen.",
+                  "rationale": "Falsch. Die Verantwortung für das Setzen von Grenzen in der Einrichtung liegt bei den Bezugspersonen dort.",
+                  "isCorrect": false
+                }
+              ]
+            },
+            {
+              "question": "Welche zusätzlichen Erfahrungen von Kindern müssen laut Anne im Kinderschutz berücksichtigt werden, insbesondere nach globalen Ereignissen wie Corona oder Kriegen? 😥",
+              "hint": "Anne spricht von belastenden Erlebnissen. 😟",
+              "answerOptions": [
+                {
+                  "text": "Unterschiedliche Stress- und Traumaerfahrungen, die Kinder gemacht haben könnten.",
+                  "rationale": "Anne betont, dass auch Kinder mit unterschiedlichen Stress- oder Traumaerfahrungen (z.B. durch Corona, Syrien, Ukraine) berücksichtigt werden müssen, wenn man über Kinderschutz spricht.",
+                  "isCorrect": true
+                },
+                {
+                  "text": "Die Finanzsituation der Familien nach solchen Ereignissen.",
+                  "rationale": "Falsch. Anne konzentriert sich auf die psychologischen und emotionalen Auswirkungen wie Stress- und Traumaerfahrungen.",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Die Notwendigkeit, allen Kindern zusätzliche Spielsachen anzubieten.",
+                  "rationale": "Falsch. Materielle Unterstützung ist nicht der Hauptfokus von Annes Aussage zu diesen Erfahrungen.",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Dass diese Kinder keine besonderen Sicherheitsbedürfnisse mehr haben.",
+                  "rationale": "Falsch. Gerade Kinder mit solchen Erfahrungen benötigen oft besondere Aufmerksamkeit und Berücksichtigung ihrer Sicherheitsbedürfnisse.",
+                  "isCorrect": false
+                }
+              ]
+            }
+          ]
+        };
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+
+        const quizContainer = document.getElementById('quiz-container');
+
+        function displayQuestion(questionData) {
+            quizContainer.innerHTML = ''; // Vorherigen Inhalt löschen
+
+            const questionElement = document.createElement('h3');
+            questionElement.textContent = questionData.question;
+            quizContainer.appendChild(questionElement);
+
+            const hintElement = document.createElement('p');
+            hintElement.textContent = `Tipp: ${questionData.hint}`;
+            hintElement.style.fontStyle = 'italic';
+            hintElement.style.fontSize = '0.9em';
+            hintElement.style.color = '#666';
+            quizContainer.appendChild(hintElement);
+
+            questionData.answerOptions.forEach((option, index) => {
+                const optionButton = document.createElement('button');
+                optionButton.textContent = option.text;
+                optionButton.onclick = () => checkAnswer(option, optionButton);
+                quizContainer.appendChild(optionButton);
+            });
+        }
+
+        function checkAnswer(selectedOption, buttonElement) {
+            const allButtons = quizContainer.querySelectorAll('button');
+            allButtons.forEach(button => {
+                button.disabled = true; // Alle Buttons deaktivieren, nachdem eine Antwort gewählt wurde
+            });
+
+            if (selectedOption.isCorrect) {
+                score++;
+                buttonElement.classList.add('correct-answer');
+            } else {
+                buttonElement.classList.add('wrong-answer');
+                // Die korrekte Antwort hervorheben
+                const correctAnswer = quizData.questions[currentQuestionIndex].answerOptions.find(opt => opt.isCorrect);
+                allButtons.forEach(button => {
+                    if (button.textContent === correctAnswer.text) {
+                        button.classList.add('correct-answer');
+                    }
+                });
+            }
+
+            const rationaleElement = document.createElement('p');
+            rationaleElement.classList.add('rationale');
+            rationaleElement.textContent = `Begründung: ${selectedOption.rationale}`;
+            quizContainer.appendChild(rationaleElement);
+
+            setTimeout(() => {
+                currentQuestionIndex++;
+                if (currentQuestionIndex < quizData.questions.length) {
+                    displayQuestion(quizData.questions[currentQuestionIndex]);
+                } else {
+                    displayResults();
+                }
+            }, 3000); // 3 Sekunden warten, bevor zur nächsten Frage oder den Ergebnissen übergegangen wird
+        }
+
+        function displayResults() {
+            quizContainer.innerHTML = '<h2>Quiz beendet! 🎉</h2>';
+            const resultText = document.createElement('p');
+            resultText.textContent = `Du hast ${score} von ${quizData.questions.length} Fragen richtig beantwortet.`;
+            quizContainer.appendChild(resultText);
+
+            if (score === quizData.questions.length) {
+                const perfectScoreMessage = document.createElement('p');
+                perfectScoreMessage.textContent = 'Herzlichen Glückwunsch! Eine perfekte Punktzahl! 🏆';
+                perfectScoreMessage.style.fontWeight = 'bold';
+                perfectScoreMessage.style.color = 'green';
+                quizContainer.appendChild(perfectScoreMessage);
+            } else {
+                const encouragementMessage = document.createElement('p');
+                encouragementMessage.textContent = 'Das ist ein guter Anfang! Versuche es gleich noch einmal, um dein Wissen zu festigen. 💪';
+                encouragementMessage.style.fontWeight = 'bold';
+                encouragementMessage.style.color = '#4E1A3D'; /* Akzentfarbe */
+                quizContainer.appendChild(encouragementMessage);
+            }
+
+
+            const restartButton = document.createElement('button');
+            restartButton.id = 'restart-button'; // ID für Styling
+            restartButton.textContent = 'Quiz neu starten 🔄';
+            restartButton.onclick = () => {
+                currentQuestionIndex = 0;
+                score = 0;
+                displayQuestion(quizData.questions[currentQuestionIndex]);
+            };
+            quizContainer.appendChild(restartButton);
+        }
+
+        // Quiz starten
+        displayQuestion(quizData.questions[currentQuestionIndex]);
+    });
+    </script>
+</body>
+</html>
