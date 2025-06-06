@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz: § 8a Schutzauftrag</title>
+    <style>
+      /* Grundlegendes CSS für besseres Aussehen */
+      body {
+          margin: 0;
+          padding: 20px;
+          background-color: #FFFBE6; /* Hintergrundfarbe: FFFBE6 */
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          min-height: 100vh;
+          box-sizing: border-box;
+      }
+      #quiz-container {
+        font-family: Arial, sans-serif;
+        max-width: 600px;
+        width: 100%; /* Stellt sicher, dass es auf kleineren Bildschirmen responsive ist */
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        background-color: #fff;
+        box-sizing: border-box; /* Stellt sicher, dass Padding und Border in der Breite enthalten sind */
+      }
+      #quiz-container h3 {
+          color: #212121; /* Farbe der Fragen: #212121 */
+          margin-bottom: 15px;
+      }
+      #quiz-container p {
+          color: #555;
+      }
+      #quiz-container button {
+        display: block;
+        width: 100%;
+        padding: 12px;
+        margin: 8px 0;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background: #f9f9f9;
+        cursor: pointer;
+        text-align: left;
+        font-size: 1em;
+        transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+      }
+      #quiz-container button:not(:disabled):hover {
+        background: #e0e0e0;
+        border-color: #999;
+      }
+      #quiz-container button:disabled {
+        cursor: not-allowed;
+        opacity: 0.7;
+      }
+      #quiz-container button.correct-answer {
+        background: #d4edda !important;
+        border-color: #28a745 !important;
+        color: #155724;
+      }
+      #quiz-container button.wrong-answer {
+        background: #f8d7da !important;
+        border-color: #dc3545 !important;
+        color: #721c24;
+      }
+      #quiz-container .rationale {
+        margin-top: 15px;
+        padding: 10px;
+        background: #e9ecef;
+        border-left: 5px solid #4E1A3D; /* Akzentfarbe für Begründungs-Rand: 4E1A3D */
+        color: #495057;
+        font-size: 0.9em;
+      }
+      #quiz-container #restart-button {
+        margin-top: 25px;
+        background: #4E1A3D; /* Akzentfarbe für Restart-Button: 4E1A3D */
+        color: white;
+        border: none;
+        cursor: pointer;
+      }
+      #quiz-container #restart-button:hover {
+        background: #3a132c; /* Dunklere Akzentfarbe beim Hover */
+      }
+    </style>
+</head>
+<body>
+
+    <div id="quiz-container">
+        <!-- Hier wird das Quiz gerendert -->
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+        // Quiz-Daten im JSON-Format
+        const quizData = {
+          "questions": [
+            {
+              "question": "Was ist laut Anne der Kern des § 8a SGB VIII? ⚖️",
+              "hint": "Anne beschreibt es als eine Verpflichtung, wenn es Anzeichen für eine bestimmte Situation gibt. 🤔",
+              "answerOptions": [
+                {
+                  "text": "Der Schutzauftrag bei Kindeswohlgefährdung.",
+                  "rationale": "Anne erklärt, dass § 8a den Schutzauftrag bei gewichtigen Anhaltspunkten für eine Kindeswohlgefährdung regelt.",
+                  "isCorrect": true
+                },
+                {
+                  "text": "Die allgemeine Meldepflicht bei Krankheiten wie Masern.",
+                  "rationale": "Das ist § 47 und betrifft die Sicherheit in der Einrichtung, während § 8a sich speziell auf Kindeswohlgefährdung in der Familie bezieht.",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Die Verpflichtung zur Partizipation von Kindern.",
+                  "rationale": "Partizipation ist ein wichtiger Teil des Kinderschutzes, aber § 8a hat einen spezifischeren Fokus auf die Gefährdungseinschätzung.",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Die Vorgaben zur Zusammenarbeit mit den Eltern.",
+                  "rationale": "Die Zusammenarbeit ist Teil des Prozesses, aber der Kern des Paragraphen ist der Schutzauftrag bei einer möglichen Gefährdung.",
+                  "isCorrect": false
+                }
+              ]
+            },
+            {
+              "question": "Welche beiden Hauptkategorien von Kindeswohlgefährdung nennt Anne? 🚫",
+              "hint": "Anne spricht von zwei Arten, wie einem Kind Leid zugefügt werden kann. 💔",
+              "answerOptions": [
+                {
+                  "text": "Körperliche, seelische oder sexuelle Gewalt und Vernachlässigung.",
+                  "rationale": "Anne definiert Kindeswohlgefährdung klar durch die beiden Bereiche Gewalt (körperlich, seelisch, sexuell) und Vernachlässigung (z.B. bei Nahrung oder Pflege).",
+                  "isCorrect": true
+                },
+                {
+                  "text": "Ungehorsam und schlechtes Benehmen.",
+                  "rationale": "Das sind Verhaltensweisen von Kindern, aber keine Kategorien der Kindeswohlgefährdung durch Erwachsene.",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Armut und schlechte Wohnverhältnisse.",
+                  "rationale": "Obwohl dies Risikofaktoren sein können, sind sie laut Anne nicht per se eine Kindeswohlgefährdung. Es kommt auf die Auswirkungen auf das Kind an.",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Häufige Krankheiten und Unfälle.",
+                  "rationale": "Das können Anzeichen sein, aber die Hauptkategorien, die Anne nennt, sind Gewalt und Vernachlässigung.",
+                  "isCorrect": false
+                }
+              ]
+            },
+            {
+              "question": "Was ist laut Anne der erste Schritt im Prozess der Gefährdungseinschätzung, wenn du einen Verdacht hast? 👣",
+              "hint": "Bevor du das Jugendamt direkt einschaltest, empfiehlt Anne einen wichtigen Zwischenschritt. 🤝",
+              "answerOptions": [
+                {
+                  "text": "Das Hinzuziehen einer 'insoweit erfahrenen Fachkraft' (iseF) zur Beratung.",
+                  "rationale": "Anne betont, dass man sich zuerst (ggf. anonymisiert) von einer iseF beraten lassen sollte, um die Situation professionell einzuschätzen.",
+                  "isCorrect": true
+                },
+                {
+                  "text": "Sofort das Jugendamt anrufen und eine Meldung machen.",
+                  "rationale": "Das Jugendamt wird erst eingeschaltet, nachdem die Gefährdungseinschätzung (idealerweise mit einer iseF) stattgefunden hat.",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Die Eltern direkt mit dem Verdacht konfrontieren.",
+                  "rationale": "Das Gespräch mit den Eltern ist Teil des Prozesses, aber der erste Schritt ist die interne Risikoeinschätzung, um vorbereitet zu sein.",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Andere Eltern nach ihrer Meinung fragen.",
+                  "rationale": "Das wäre ein Bruch der Schweigepflicht. Anne betont die Wichtigkeit von professioneller, interner Beratung.",
+                  "isCorrect": false
+                }
+              ]
+            },
+            {
+              "question": "Warum ist laut Anne die Dokumentation in diesem Prozess so extrem wichtig? ✍️",
+              "hint": "Anne sagt, es geht darum, etwas 'in der Hand zu haben' und den Prozess nachvollziehbar zu machen. 📂",
+              "answerOptions": [
+                {
+                  "text": "Um den gesamten Prozess nachvollziehbar zu machen und eine Grundlage für Gespräche und Entscheidungen zu haben.",
+                  "rationale": "Anne erklärt, dass die Dokumentation (Wann habe ich was gesehen? Was habe ich unternommen?) entscheidend ist, um den Prozess transparent zu machen und im Zweifel Beweise zu haben.",
+                  "isCorrect": true
+                },
+                {
+                  "text": "Um die Arbeitszeit für die Abrechnung zu erfassen.",
+                  "rationale": "Die Dokumentation dient dem Schutz des Kindes und der rechtlichen Absicherung, nicht der Abrechnung.",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Um eine persönliche Akte über die Eltern anzulegen.",
+                  "rationale": "Es geht nicht um eine persönliche Akte, sondern um eine sachliche, faktenbasierte Dokumentation des Gefährdungseinschätzungsprozesses.",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Um die Informationen mit Kolleg:innen teilen zu können.",
+                  "rationale": "Obwohl der Austausch wichtig ist, ist der Hauptgrund für die Dokumentation die Nachvollziehbarkeit und rechtliche Absicherung des Verfahrens.",
+                  "isCorrect": false
+                }
+              ]
+            },
+            {
+              "question": "Welche Aufgabe hat die 'insoweit erfahrene Fachkraft' (iseF) laut Anne in diesem Prozess? 🧑‍🏫",
+              "hint": "Anne erklärt, dass diese Person nicht die Entscheidung trifft, sondern eine andere wichtige Funktion hat. 💡",
+              "answerOptions": [
+                {
+                  "text": "Sie berät und unterstützt bei der Risikoeinschätzung, trifft aber nicht die endgültige Entscheidung.",
+                  "rationale": "Anne stellt klar, dass die iseF eine reine Beratungsfunktion hat und hilft, die Situation einzuschätzen. Die Verantwortung für die Meldung bleibt bei der Kindertagespflegeperson.",
+                  "isCorrect": true
+                },
+                {
+                  "text": "Sie führt die Gespräche mit den Eltern anstelle der Tagespflegeperson.",
+                  "rationale": "Die iseF kann bei der Vorbereitung helfen, aber die Gespräche werden in der Regel von der Tagespflegeperson selbst geführt.",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Sie entscheidet, ob das Jugendamt eingeschaltet werden muss.",
+                  "rationale": "Diese Entscheidung liegt bei der Kindertagespflegeperson bzw. der Leitung. Die iseF gibt nur eine fachliche Empfehlung.",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Sie ist eine Anwält:in, die den Fall rechtlich prüft.",
+                  "rationale": "Eine iseF ist eine sozialpädagogische Fachkraft mit spezieller Weiterbildung im Kinderschutz, keine Jurist:in.",
+                  "isCorrect": false
+                }
+              ]
+            }
+          ]
+        };
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+
+        const quizContainer = document.getElementById('quiz-container');
+
+        function displayQuestion(questionData) {
+            quizContainer.innerHTML = ''; // Vorherigen Inhalt löschen
+
+            const questionElement = document.createElement('h3');
+            questionElement.textContent = questionData.question;
+            quizContainer.appendChild(questionElement);
+
+            const hintElement = document.createElement('p');
+            hintElement.textContent = `Tipp: ${questionData.hint}`;
+            hintElement.style.fontStyle = 'italic';
+            hintElement.style.fontSize = '0.9em';
+            hintElement.style.color = '#666';
+            quizContainer.appendChild(hintElement);
+
+            questionData.answerOptions.forEach((option, index) => {
+                const optionButton = document.createElement('button');
+                optionButton.textContent = option.text;
+                optionButton.onclick = () => checkAnswer(option, optionButton);
+                quizContainer.appendChild(optionButton);
+            });
+        }
+
+        function checkAnswer(selectedOption, buttonElement) {
+            const allButtons = quizContainer.querySelectorAll('button');
+            allButtons.forEach(button => {
+                button.disabled = true; // Alle Buttons deaktivieren, nachdem eine Antwort gewählt wurde
+            });
+
+            if (selectedOption.isCorrect) {
+                score++;
+                buttonElement.classList.add('correct-answer');
+            } else {
+                buttonElement.classList.add('wrong-answer');
+                // Die korrekte Antwort hervorheben
+                const correctAnswer = quizData.questions[currentQuestionIndex].answerOptions.find(opt => opt.isCorrect);
+                allButtons.forEach(button => {
+                    if (button.textContent === correctAnswer.text) {
+                        button.classList.add('correct-answer');
+                    }
+                });
+            }
+
+            const rationaleElement = document.createElement('p');
+            rationaleElement.classList.add('rationale');
+            rationaleElement.textContent = `Begründung: ${selectedOption.rationale}`;
+            quizContainer.appendChild(rationaleElement);
+
+            setTimeout(() => {
+                currentQuestionIndex++;
+                if (currentQuestionIndex < quizData.questions.length) {
+                    displayQuestion(quizData.questions[currentQuestionIndex]);
+                } else {
+                    displayResults();
+                }
+            }, 3000); // 3 Sekunden warten, bevor zur nächsten Frage oder den Ergebnissen übergegangen wird
+        }
+
+        function displayResults() {
+            quizContainer.innerHTML = '<h2>Quiz beendet! 🎉</h2>';
+            const resultText = document.createElement('p');
+            // Duz-Form hier verwendet
+            resultText.textContent = `Du hast ${score} von ${quizData.questions.length} Fragen richtig beantwortet.`;
+            quizContainer.appendChild(resultText);
+
+            if (score === quizData.questions.length) {
+                const perfectScoreMessage = document.createElement('p');
+                perfectScoreMessage.textContent = 'Herzlichen Glückwunsch! Eine perfekte Punktzahl! 🏆';
+                perfectScoreMessage.style.fontWeight = 'bold';
+                perfectScoreMessage.style.color = 'green';
+                quizContainer.appendChild(perfectScoreMessage);
+            } else {
+                const encouragementMessage = document.createElement('p');
+                // Duz-Form hier verwendet
+                encouragementMessage.textContent = 'Das ist ein guter Anfang! Versuche es gleich noch einmal, um dein Wissen zu festigen. 💪';
+                encouragementMessage.style.fontWeight = 'bold';
+                encouragementMessage.style.color = '#4E1A3D'; /* Akzentfarbe */
+                quizContainer.appendChild(encouragementMessage);
+            }
+
+
+            const restartButton = document.createElement('button');
+            restartButton.id = 'restart-button'; // ID für Styling
+            restartButton.textContent = 'Quiz neu starten 🔄';
+            restartButton.onclick = () => {
+                currentQuestionIndex = 0;
+                score = 0;
+                displayQuestion(quizData.questions[currentQuestionIndex]);
+            };
+            quizContainer.appendChild(restartButton);
+        }
+
+        // Quiz starten
+        displayQuestion(quizData.questions[currentQuestionIndex]);
+    });
+    </script>
+</body>
+</html>
