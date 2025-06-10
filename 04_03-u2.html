@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz: Sicherheit in Kinderinteraktionen</title>
+    <style>
+      /* Grundlegendes CSS für besseres Aussehen */
+      body {
+          margin: 0;
+          padding: 20px;
+          background-color: #FFFBE6; /* Hintergrundfarbe: FFFBE6 */
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          min-height: 100vh;
+          box-sizing: border-box;
+      }
+      #quiz-container {
+        font-family: Arial, sans-serif;
+        max-width: 600px;
+        width: 100%; /* Stellt sicher, dass es auf kleineren Bildschirmen responsive ist */
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        background-color: #fff;
+        box-sizing: border-box; /* Stellt sicher, dass Padding und Border in der Breite enthalten sind */
+      }
+      #quiz-container h3 {
+          color: #212121; /* Farbe der Fragen: #212121 */
+          margin-bottom: 15px;
+      }
+      #quiz-container p {
+          color: #555;
+      }
+      #quiz-container .tf-button-group button {
+        display: inline-block; /* Für nebeneinander liegende Buttons */
+        width: 48%; /* Jeder Button nimmt fast die Hälfte der Breite ein */
+        padding: 12px;
+        margin: 8px 1%; /* Kleiner Abstand zwischen den Buttons */
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background: #f9f9f9;
+        cursor: pointer;
+        text-align: center; /* Text zentrieren */
+        font-size: 1em;
+        transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+      }
+      #quiz-container .tf-button-group button:not(:disabled):hover {
+        background: #e0e0e0;
+        border-color: #999;
+      }
+      #quiz-container button:disabled {
+        cursor: not-allowed;
+        opacity: 0.7;
+      }
+      #quiz-container button.correct-answer {
+        background: #d4edda !important;
+        border-color: #28a745 !important;
+        color: #155724;
+      }
+      #quiz-container button.wrong-answer {
+        background: #f8d7da !important;
+        border-color: #dc3545 !important;
+        color: #721c24;
+      }
+      #quiz-container .rationale {
+        margin-top: 15px;
+        padding: 10px;
+        background: #e9ecef;
+        border-left: 5px solid #4E1A3D; /* Akzentfarbe für Begründungs-Rand: 4E1A3D */
+        color: #495057;
+        font-size: 0.9em;
+      }
+      #quiz-container #restart-button {
+        margin-top: 25px;
+        background: #4E1A3D; /* Akzentfarbe für Restart-Button: 4E1A3D */
+        color: white;
+        border: none;
+        cursor: pointer;
+      }
+      #quiz-container #restart-button:hover {
+        background: #3a132c; /* Dunklere Akzentfarbe beim Hover */
+      }
+    </style>
+</head>
+<body>
+
+    <div id="quiz-container">
+        </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+        // Quiz-Daten im JSON-Format für Wahr/Falsch
+        const quizData = {
+          "questions": [
+            {
+              "question": "Laut Anne ist es nicht relevant für den Kinderschutz, wenn ein Kind von anderen Kindern ausgegrenzt wird. 🙅‍♀️",
+              "hint": "Anne sagt, jedes Kind hat ein Recht darauf, geschützt zu werden. 🛡️",
+              "answerOptions": [
+                {
+                  "text": "Wahr",
+                  "isCorrect": false,
+                  "rationale": "Falsch. Anne sagt explizit, dass Ausgrenzung kinderschutzrelevant ist und jedes Kind das Recht hat, vor Ausschluss geschützt zu werden."
+                },
+                {
+                  "text": "Falsch",
+                  "isCorrect": true,
+                  "rationale": "Falsch. Anne sagt explizit, dass Ausgrenzung kinderschutzrelevant ist und jedes Kind das Recht hat, vor Ausschluss geschützt zu werden."
+                }
+              ]
+            },
+            {
+              "question": "Anne betont, dass es die Aufgabe der Erwachsenen ist, Spielsituationen immer zu dominieren, um die Sicherheit der Kinder zu gewährleisten. 🚦",
+              "hint": "Anne warnt davor, Kinder abhängig zu machen. 💡",
+              "answerOptions": [
+                {
+                  "text": "Wahr",
+                  "isCorrect": false,
+                  "rationale": "Falsch. Anne warnt davor, das Spiel zu sehr zu dominieren oder übergriffig zu sein, da Kinder nicht in ein Abhängigkeitsverhältnis geraten sollen und das Spiel auch selbst managen sollen."
+                },
+                {
+                  "text": "Falsch",
+                  "isCorrect": true,
+                  "rationale": "Falsch. Anne warnt davor, das Spiel zu sehr zu dominieren oder übergriffig zu sein, da Kinder nicht in ein Abhängigkeitsverhältnis geraten sollen und das Spiel auch selbst managen sollen."
+                }
+              ]
+            },
+            {
+              "question": "Jedes Kind hat laut Anne das Recht, die Chance zu haben, am Spiel teilzunehmen. ⛹️‍♂️",
+              "hint": "Denk an Annes Aussage über die Chancengleichheit beim Spiel. 🤝",
+              "answerOptions": [
+                {
+                  "text": "Wahr",
+                  "isCorrect": true,
+                  "rationale": "Wahr. Anne sagt klar: 'Alle Kinder sollen die Chance haben, am Spiel teilzunehmen.'"
+                },
+                {
+                  "text": "Falsch",
+                  "isCorrect": false,
+                  "rationale": "Falsch. Anne sagt klar, dass alle Kinder die Chance haben sollen, am Spiel teilzunehmen."
+                }
+              ]
+            },
+            {
+              "question": "Anne meint, es sei immer klar, wann man in Spielsituationen eingreifen muss und wann nicht. 🧩",
+              "hint": "Anne beschreibt es als einen Balanceakt. 🤸‍♀️",
+              "answerOptions": [
+                {
+                  "text": "Wahr",
+                  "isCorrect": false,
+                  "rationale": "Falsch. Anne beschreibt die Situation als 'totaler Spagat' und 'Drahtseilakt', was bedeutet, dass es eine große Balance und nicht immer eine klare Entscheidung ist, wann man eingreift."
+                },
+                {
+                  "text": "Falsch",
+                  "isCorrect": true,
+                  "rationale": "Falsch. Anne beschreibt die Situation als 'totaler Spagat' und 'Drahtseilakt', was bedeutet, dass es eine große Balance und nicht immer eine klare Entscheidung ist, wann man eingreift."
+                }
+              ]
+            }
+          ]
+        };
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+
+        const quizContainer = document.getElementById('quiz-container');
+
+        function displayQuestion(questionData) {
+            quizContainer.innerHTML = ''; // Vorherigen Inhalt löschen
+
+            const questionElement = document.createElement('h3');
+            questionElement.textContent = questionData.question;
+            quizContainer.appendChild(questionElement);
+
+            const hintElement = document.createElement('p');
+            hintElement.textContent = `Tipp: ${questionData.hint}`;
+            hintElement.style.fontStyle = 'italic';
+            hintElement.style.fontSize = '0.9em';
+            hintElement.style.color = '#666';
+            quizContainer.appendChild(hintElement);
+
+            // Zufällige Reihenfolge der Antwortmöglichkeiten (Wahr/Falsch)
+            const shuffledOptions = [...questionData.answerOptions];
+            for (let i = shuffledOptions.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffledOptions[i], shuffledOptions[j]] = [shuffledOptions[j], shuffledOptions[i]]; // Elemente tauschen
+            }
+
+            const buttonGroup = document.createElement('div');
+            buttonGroup.classList.add('tf-button-group'); // Klasse für Styling der Wahr/Falsch-Buttons
+
+            shuffledOptions.forEach((option, index) => {
+                const optionButton = document.createElement('button');
+                optionButton.textContent = option.text;
+                optionButton.onclick = () => checkAnswer(option, optionButton);
+                buttonGroup.appendChild(optionButton);
+            });
+            quizContainer.appendChild(buttonGroup); // Füge die Button-Gruppe zum Container hinzu
+        }
+
+        function checkAnswer(selectedOption, buttonElement) {
+            const allButtons = quizContainer.querySelectorAll('.tf-button-group button');
+            allButtons.forEach(button => {
+                button.disabled = true; // Alle Buttons deaktivieren, nachdem eine Antwort gewählt wurde
+            });
+
+            if (selectedOption.isCorrect) {
+                score++;
+                buttonElement.classList.add('correct-answer');
+            } else {
+                buttonElement.classList.add('wrong-answer');
+                // Die korrekte Antwort hervorheben
+                const correctAnswer = quizData.questions[currentQuestionIndex].answerOptions.find(opt => opt.isCorrect);
+                allButtons.forEach(button => {
+                    if (button.textContent === correctAnswer.text) {
+                        button.classList.add('correct-answer');
+                    }
+                });
+            }
+
+            const rationaleElement = document.createElement('p');
+            rationaleElement.classList.add('rationale');
+            rationaleElement.textContent = `Begründung: ${selectedOption.rationale}`;
+            quizContainer.appendChild(rationaleElement);
+
+            setTimeout(() => {
+                currentQuestionIndex++;
+                if (currentQuestionIndex < quizData.questions.length) {
+                    displayQuestion(quizData.questions[currentQuestionIndex]);
+                } else {
+                    displayResults();
+                }
+            }, 3000); // 3 Sekunden warten, bevor zur nächsten Frage oder den Ergebnissen übergegangen wird
+        }
+
+        function displayResults() {
+            quizContainer.innerHTML = '<h2>Quiz beendet! 🎉</h2>';
+            const resultText = document.createElement('p');
+            resultText.textContent = `Du hast ${score} von ${quizData.questions.length} Fragen richtig beantwortet.`;
+            quizContainer.appendChild(resultText);
+
+            if (score === quizData.questions.length) {
+                const perfectScoreMessage = document.createElement('p');
+                perfectScoreMessage.textContent = 'Herzlichen Glückwunsch! Eine perfekte Punktzahl! 🏆';
+                perfectScoreMessage.style.fontWeight = 'bold';
+                perfectScoreMessage.style.color = 'green';
+                quizContainer.appendChild(perfectScoreMessage);
+            } else {
+                const encouragementMessage = document.createElement('p');
+                encouragementMessage.textContent = 'Das ist ein guter Anfang! Versuche es gleich noch einmal, um dein Wissen zu festigen. 💪';
+                encouragementMessage.style.fontWeight = 'bold';
+                encouragementMessage.style.color = '#4E1A3D'; /* Akzentfarbe */
+                quizContainer.appendChild(encouragementMessage);
+            }
+
+
+            const restartButton = document.createElement('button');
+            restartButton.id = 'restart-button'; // ID für Styling
+            restartButton.textContent = 'Quiz neu starten 🔄';
+            restartButton.onclick = () => {
+                currentQuestionIndex = 0;
+                score = 0;
+                displayQuestion(quizData.questions[currentQuestionIndex]);
+            };
+            quizContainer.appendChild(restartButton);
+        }
+
+        // Quiz starten
+        displayQuestion(quizData.questions[currentQuestionIndex]);
+    });
+    </script>
+</body>
+</html>
