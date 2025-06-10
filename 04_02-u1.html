@@ -209,4 +209,130 @@
                   "isCorrect": true
                 },
                 {
-                  "text": "Verhaltensweisen, die genau unseren
+                  "text": "Verhaltensweisen, die genau unseren Erwartungen entsprechen und keine Probleme bereiten.",
+                  "rationale": "Falsch. Diese erfordern keine besondere 'Berücksichtigung' im Sinne von genauem Hinsehen, da sie unauffällig sind.",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Verhaltensweisen, die bewusst provozieren sollen, um Aufmerksamkeit zu erregen.",
+                  "rationale": "Falsch. Anne spricht von Verhaltensweisen, die auf mögliche Entwicklungsbesonderheiten hindeuten, nicht primär von bewusster Provokation.",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Alle Verhaltensweisen von Kindern, unabhängig von ihrer Auffälligkeit.",
+                  "rationale": "Falsch. Anne betont, dass man bei *besonderen* Verhaltensweisen besonders genau hinschauen muss.",
+                  "isCorrect": false
+                }
+              ]
+            }
+          ]
+        };
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+
+        const quizContainer = document.getElementById('quiz-container');
+
+        function displayQuestion(questionData) {
+            quizContainer.innerHTML = ''; // Vorherigen Inhalt löschen
+
+            const questionElement = document.createElement('h3');
+            questionElement.textContent = questionData.question;
+            quizContainer.appendChild(questionElement);
+
+            const hintElement = document.createElement('p');
+            hintElement.textContent = `Tipp: ${questionData.hint}`;
+            hintElement.style.fontStyle = 'italic';
+            hintElement.style.fontSize = '0.9em';
+            hintElement.style.color = '#666';
+            quizContainer.appendChild(hintElement);
+
+            // Zufällige Reihenfolge der Antwortmöglichkeiten
+            const shuffledOptions = [...questionData.answerOptions];
+            for (let i = shuffledOptions.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffledOptions[i], shuffledOptions[j]] = [shuffledOptions[j], shuffledOptions[i]]; // Elemente tauschen
+            }
+
+            shuffledOptions.forEach((option, index) => {
+                const optionButton = document.createElement('button');
+                optionButton.textContent = option.text;
+                optionButton.onclick = () => checkAnswer(option, optionButton);
+                quizContainer.appendChild(optionButton);
+            });
+        }
+
+        function checkAnswer(selectedOption, buttonElement) {
+            const allButtons = quizContainer.querySelectorAll('button');
+            allButtons.forEach(button => {
+                button.disabled = true; // Alle Buttons deaktivieren, nachdem eine Antwort gewählt wurde
+            });
+
+            if (selectedOption.isCorrect) {
+                score++;
+                buttonElement.classList.add('correct-answer');
+            } else {
+                buttonElement.classList.add('wrong-answer');
+                // Die korrekte Antwort hervorheben
+                const correctAnswer = quizData.questions[currentQuestionIndex].answerOptions.find(opt => opt.isCorrect);
+                allButtons.forEach(button => {
+                    // Sicherstellen, dass der Button, der die korrekte Antwort enthält, hervorgehoben wird
+                    if (button.textContent === correctAnswer.text) {
+                        button.classList.add('correct-answer');
+                    }
+                });
+            }
+
+            const rationaleElement = document.createElement('p');
+            rationaleElement.classList.add('rationale');
+            rationaleElement.textContent = `Begründung: ${selectedOption.rationale}`;
+            quizContainer.appendChild(rationaleElement);
+
+            setTimeout(() => {
+                currentQuestionIndex++;
+                if (currentQuestionIndex < quizData.questions.length) {
+                    displayQuestion(quizData.questions[currentQuestionIndex]);
+                } else {
+                    displayResults();
+                }
+            }, 3000); // 3 Sekunden warten, bevor zur nächsten Frage oder den Ergebnissen übergegangen wird
+        }
+
+        function displayResults() {
+            quizContainer.innerHTML = '<h2>Quiz beendet! 🎉</h2>';
+            const resultText = document.createElement('p');
+            resultText.textContent = `Du hast ${score} von ${quizData.questions.length} Fragen richtig beantwortet.`;
+            quizContainer.appendChild(resultText);
+
+            if (score === quizData.questions.length) {
+                const perfectScoreMessage = document.createElement('p');
+                perfectScoreMessage.textContent = 'Herzlichen Glückwunsch! Eine perfekte Punktzahl! 🏆';
+                perfectScoreMessage.style.fontWeight = 'bold';
+                perfectScoreMessage.style.color = 'green';
+                quizContainer.appendChild(perfectScoreMessage);
+            } else {
+                const encouragementMessage = document.createElement('p');
+                encouragementMessage.textContent = 'Das ist ein guter Anfang! Versuche es gleich noch einmal, um dein Wissen zu festigen. 💪';
+                encouragementMessage.style.fontWeight = 'bold';
+                encouragementMessage.style.color = '#4E1A3D'; /* Akzentfarbe */
+                quizContainer.appendChild(encouragementMessage);
+            }
+
+
+            const restartButton = document.createElement('button');
+            restartButton.id = 'restart-button'; // ID für Styling
+            restartButton.textContent = 'Quiz neu starten 🔄';
+            restartButton.onclick = () => {
+                currentQuestionIndex = 0;
+                score = 0;
+                displayQuestion(quizData.questions[currentQuestionIndex]);
+            };
+            quizContainer.appendChild(restartButton);
+        }
+
+        // Quiz starten
+        displayQuestion(quizData.questions[currentQuestionIndex]);
+    });
+    </script>
+</body>
+</html>
