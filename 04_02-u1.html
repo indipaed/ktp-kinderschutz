@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz: Reflexion & Belastung</title>
+    <style>
+      /* Grundlegendes CSS für besseres Aussehen */
+      body {
+          margin: 0;
+          padding: 20px;
+          background-color: #FFFBE6; /* Hintergrundfarbe: FFFBE6 */
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          min-height: 100vh;
+          box-sizing: border-box;
+      }
+      #quiz-container {
+        font-family: Arial, sans-serif;
+        max-width: 600px;
+        width: 100%; /* Stellt sicher, dass es auf kleineren Bildschirmen responsive ist */
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        background-color: #fff;
+        box-sizing: border-box; /* Stellt sicher, dass Padding und Border in der Breite enthalten sind */
+      }
+      #quiz-container h3 {
+          color: #212121; /* Farbe der Fragen: #212121 */
+          margin-bottom: 15px;
+      }
+      #quiz-container p {
+          color: #555;
+      }
+      #quiz-container button {
+        display: block;
+        width: 100%;
+        padding: 12px;
+        margin: 8px 0;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background: #f9f9f9;
+        cursor: pointer;
+        text-align: left;
+        font-size: 1em;
+        transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+      }
+      #quiz-container button:not(:disabled):hover {
+        background: #e0e0e0;
+        border-color: #999;
+      }
+      #quiz-container button:disabled {
+        cursor: not-allowed;
+        opacity: 0.7;
+      }
+      #quiz-container button.correct-answer {
+        background: #d4edda !important;
+        border-color: #28a745 !important;
+        color: #155724;
+      }
+      #quiz-container button.wrong-answer {
+        background: #f8d7da !important;
+        border-color: #dc3545 !important;
+        color: #721c24;
+      }
+      #quiz-container .rationale {
+        margin-top: 15px;
+        padding: 10px;
+        background: #e9ecef;
+        border-left: 5px solid #4E1A3D; /* Akzentfarbe für Begründungs-Rand: 4E1A3D */
+        color: #495057;
+        font-size: 0.9em;
+      }
+      #quiz-container #restart-button {
+        margin-top: 25px;
+        background: #4E1A3D; /* Akzentfarbe für Restart-Button: 4E1A3D */
+        color: white;
+        border: none;
+        cursor: pointer;
+      }
+      #quiz-container #restart-button:hover {
+        background: #3a132c; /* Dunklere Akzentfarbe beim Hover */
+      }
+    </style>
+</head>
+<body>
+
+    <div id="quiz-container">
+        </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+        // Quiz-Daten im JSON-Format
+        const quizData = {
+          "questions": [
+            {
+              "question": "Was ist laut Anne die wichtigste Reflexion und Überlegung für Kindertagespflegepersonen in der Praxis? 🤔",
+              "hint": "Anne spricht davon, die eigene Geschichte miteinzubeziehen. 📜",
+              "answerOptions": [
+                {
+                  "text": "Immer die eigene Biografie mitzudenken und zu reflektieren, besonders Erfahrungen mit Macht und Ohnmacht.",
+                  "rationale": "Anne betont die Notwendigkeit, die eigene Biografie zu reflektieren, um zu verstehen, wann man selbst Macht oder Ohnmacht erlebt hat und wie sich das anfühlt. ",
+                  "isCorrect": true
+                },
+                {
+                  "text": "Sich ausschließlich auf die Bedürfnisse der Kinder zu konzentrieren, ohne persönliche Erfahrungen zu berücksichtigen.",
+                  "rationale": "Falsch. Anne hebt hervor, dass die Reflexion der eigenen Biografie ein Schlüssel ist, um die Situationen mit Kindern besser zu verstehen. ",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Regelmäßige Supervision durch externe Fachkräfte, um Konflikte zu vermeiden.",
+                  "rationale": "Dies kann hilfreich sein, aber Anne nennt die individuelle Reflexion der eigenen Biografie als die wichtigste Überlegung. ",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Das strikte Einhalten aller pädagogischen Konzepte, ohne persönliche Spielräume.",
+                  "rationale": "Falsch. Anne spricht von Reflexion des eigenen Verhaltens, nicht nur vom starren Einhalten von Konzepten. ",
+                  "isCorrect": false
+                }
+              ]
+            },
+            {
+              "question": "Was ist laut Anne meist der Grund, warum Kindertagespflegepersonen im Alltag auf Strenge oder Autorität zurückgreifen? 💢",
+              "hint": "Anne spricht von fehlenden Kapazitäten. 🔋",
+              "answerOptions": [
+                {
+                  "text": "Überlastung, Erschöpfung und ein Mangel an Ressourcen oder Kapazität.",
+                  "rationale": "Anne erklärt, dass fehlende Ressourcen, Kapazität, Überlastung und Erschöpfung die Hauptgründe sind, warum man im Alltag auf Strenge oder Autorität zurückgreifen könnte. ",
+                  "isCorrect": true
+                },
+                {
+                  "text": "Ein bewusster Erziehungsstil, um Kinder zu disziplinieren.",
+                  "rationale": "Falsch. Anne impliziert, dass es oft eine unabsichtliche Reaktion auf Stress ist, nicht unbedingt ein bewusster Erziehungsstil. ",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Der Wunsch, die Kontrolle über die Kinder zu behalten.",
+                  "rationale": "Falsch. Obwohl Kontrolle eine Rolle spielen kann, nennt Anne primär Belastung und Erschöpfung als Auslöser. ",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Die Unfähigkeit, andere pädagogische Methoden anzuwenden.",
+                  "rationale": "Falsch. Anne spricht von einem temporären Mangel an Kapazität, nicht von einer generellen Unfähigkeit. ",
+                  "isCorrect": false
+                }
+              ]
+            },
+            {
+              "question": "Welches kurzfristige, aber oft schwierige Hilfsmittel schlägt Anne für Momente der Belastung in der Kindertagespflege vor? ⏳",
+              "hint": "Anne spricht von einer kurzen Pause. 🚽",
+              "answerOptions": [
+                {
+                  "text": "Einen kurzen Blick aufs Klo für fünf Minuten, um Luft zu holen.",
+                  "rationale": "Anne nennt den 'kurzen Blick mal aufs Klo, fünf Minuten Luft holen' als theoretisch hilfreiches Mittel, räumt aber ein, dass dies in der Kindertagespflege schwer umsetzbar ist, da niemand anders da ist. ",
+                  "isCorrect": true
+                },
+                {
+                  "text": "Sofortige Rückmeldung von den Eltern einfordern.",
+                  "rationale": "Falsch. Anne spricht von einer Selbsthilfe-Strategie, nicht von der Einbeziehung der Eltern in diesem Moment. ",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Die Kinder in eine Auszeit schicken, bis man sich beruhigt hat.",
+                  "rationale": "Falsch. Anne fokussiert sich auf die Selbstregulierung der Bezugsperson, nicht auf Maßnahmen für die Kinder in diesem Moment. ",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Die Belastung ignorieren und einfach weitermachen.",
+                  "rationale": "Falsch. Anne sucht nach Wegen, Belastung zu bewältigen, anstatt sie zu ignorieren. ",
+                  "isCorrect": false
+                }
+              ]
+            },
+            {
+              "question": "Anne unterscheidet zwischen 'ertragen' und 'anerkennen'. Was versteht Anne unter Verhaltensweisen, die man 'erträgt'? 😐",
+              "hint": "Anne gibt ein Beispiel mit Essen. 🍝",
+              "answerOptions": [
+                {
+                  "text": "Verhaltensweisen, die man geduldig erträgt, obwohl man sie als wahnsinnig anstrengend empfindet und die oft mit der eigenen Erziehung zu tun haben.",
+                  "rationale": "Anne erklärt, dass 'ertragen' sich auf Verhaltensweisen (wie z.B. zermatschtes Kinderessen) bezieht, die man als anstrengend empfindet, aber geduldig hinnimmt, oft beeinflusst von der eigenen Biografie und Erziehung. ",
+                  "isCorrect": true
+                },
+                {
+                  "text": "Verhaltensweisen, die man aktiv fördert und wertschätzt.",
+                  "rationale": "Falsch. Das beschreibt das 'Anerkennen' oder 'Wertschätzen'. ",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Verhaltensweisen, die sofort korrigiert werden müssen, weil sie gefährlich sind.",
+                  "rationale": "Falsch. Anne spricht von Dingen, die man erträgt, nicht von akuten Gefahren, die sofortiges Eingreifen erfordern.",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Verhaltensweisen, die man nicht sehen muss und deshalb ignoriert.",
+                  "rationale": "Falsch. Man erträgt sie, das heißt, man ist sich ihrer bewusst, auch wenn man sie nicht schön findet. ",
+                  "isCorrect": false
+                }
+              ]
+            },
+            {
+              "question": "Welche Art von Verhaltensweisen von Kindern erfordert laut Anne besondere Aufmerksamkeit und Berücksichtigung? 🧐",
+              "hint": "Anne nennt Beispiele für Entwicklungsbesonderheiten. 💬🚶‍♀️",
+              "answerOptions": [
+                {
+                  "text": "Verhaltensweisen, die anders sind als unsere Erwartungen oder auf Entwicklungsbesonderheiten hindeuten, wie z.B. ein dreijähriges Kind, das noch nicht spricht oder kein Interesse an anderen Kindern zeigt.",
+                  "rationale": "Anne hebt hervor, dass Verhaltensweisen wie ein dreijähriges Kind, das noch nicht spricht, oder kein Interesse an anderen Kindern zeigt, besondere Aufmerksamkeit und Berücksichtigung erfordern, da sie aufmerksam beobachtet werden müssen. ",
+                  "isCorrect": true
+                },
+                {
+                  "text": "Verhaltensweisen, die genau unseren Erwartungen entsprechen und keine Probleme bereiten.",
+                  "rationale": "Falsch. Diese erfordern keine besondere 'Berücksichtigung' im Sinne von genauem Hinsehen, da sie unauffällig sind.",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Verhaltensweisen, die bewusst provozieren sollen, um Aufmerksamkeit zu erregen.",
+                  "rationale": "Falsch. Anne spricht von Verhaltensweisen, die auf mögliche Entwicklungsbesonderheiten hindeuten, nicht primär von bewusster Provokation. ",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Alle Verhaltensweisen von Kindern, unabhängig von ihrer Auffälligkeit.",
+                  "rationale": "Falsch. Anne betont, dass man bei *besonderen* Verhaltensweisen besonders genau hinschauen muss. ",
+                  "isCorrect": false
+                }
+              ]
+            }
+          ]
+        };
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+
+        const quizContainer = document.getElementById('quiz-container');
+
+        function displayQuestion(questionData) {
+            quizContainer.innerHTML = ''; // Vorherigen Inhalt löschen
+
+            const questionElement = document.createElement('h3');
+            questionElement.textContent = questionData.question;
+            quizContainer.appendChild(questionElement);
+
+            const hintElement = document.createElement('p');
+            hintElement.textContent = `Tipp: ${questionData.hint}`;
+            hintElement.style.fontStyle = 'italic';
+            hintElement.style.fontSize = '0.9em';
+            hintElement.style.color = '#666';
+            quizContainer.appendChild(hintElement);
+
+            questionData.answerOptions.forEach((option, index) => {
+                const optionButton = document.createElement('button');
+                optionButton.textContent = option.text;
+                optionButton.onclick = () => checkAnswer(option, optionButton);
+                quizContainer.appendChild(optionButton);
+            });
+        }
+
+        function checkAnswer(selectedOption, buttonElement) {
+            const allButtons = quizContainer.querySelectorAll('button');
+            allButtons.forEach(button => {
+                button.disabled = true; // Alle Buttons deaktivieren, nachdem eine Antwort gewählt wurde
+            });
+
+            if (selectedOption.isCorrect) {
+                score++;
+                buttonElement.classList.add('correct-answer');
+            } else {
+                buttonElement.classList.add('wrong-answer');
+                // Die korrekte Antwort hervorheben
+                const correctAnswer = quizData.questions[currentQuestionIndex].answerOptions.find(opt => opt.isCorrect);
+                allButtons.forEach(button => {
+                    if (button.textContent === correctAnswer.text) {
+                        button.classList.add('correct-answer');
+                    }
+                });
+            }
+
+            const rationaleElement = document.createElement('p');
+            rationaleElement.classList.add('rationale');
+            rationaleElement.textContent = `Begründung: ${selectedOption.rationale}`;
+            quizContainer.appendChild(rationaleElement);
+
+            setTimeout(() => {
+                currentQuestionIndex++;
+                if (currentQuestionIndex < quizData.questions.length) {
+                    displayQuestion(quizData.questions[currentQuestionIndex]);
+                } else {
+                    displayResults();
+                }
+            }, 3000); // 3 Sekunden warten, bevor zur nächsten Frage oder den Ergebnissen übergegangen wird
+        }
+
+        function displayResults() {
+            quizContainer.innerHTML = '<h2>Quiz beendet! 🎉</h2>';
+            const resultText = document.createElement('p');
+            resultText.textContent = `Du hast ${score} von ${quizData.questions.length} Fragen richtig beantwortet.`;
+            quizContainer.appendChild(resultText);
+
+            if (score === quizData.questions.length) {
+                const perfectScoreMessage = document.createElement('p');
+                perfectScoreMessage.textContent = 'Herzlichen Glückwunsch! Eine perfekte Punktzahl! 🏆';
+                perfectScoreMessage.style.fontWeight = 'bold';
+                perfectScoreMessage.style.color = 'green';
+                quizContainer.appendChild(perfectScoreMessage);
+            } else {
+                const encouragementMessage = document.createElement('p');
+                encouragementMessage.textContent = 'Das ist ein guter Anfang! Versuche es gleich noch einmal, um dein Wissen zu festigen. 💪';
+                encouragementMessage.style.fontWeight = 'bold';
+                encouragementMessage.style.color = '#4E1A3D'; /* Akzentfarbe */
+                quizContainer.appendChild(encouragementMessage);
+            }
+
+
+            const restartButton = document.createElement('button');
+            restartButton.id = 'restart-button'; // ID für Styling
+            restartButton.textContent = 'Quiz neu starten 🔄';
+            restartButton.onclick = () => {
+                currentQuestionIndex = 0;
+                score = 0;
+                displayQuestion(quizData.questions[currentQuestionIndex]);
+            };
+            quizContainer.appendChild(restartButton);
+        }
+
+        // Quiz starten
+        displayQuestion(quizData.questions[currentQuestionIndex]);
+    });
+    </script>
+</body>
+</html>
