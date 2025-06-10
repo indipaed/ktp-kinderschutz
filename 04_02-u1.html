@@ -132,4 +132,155 @@
                 },
                 {
                   "text": "Ein bewusster Erziehungsstil, um Kinder zu disziplinieren.",
-                  "rationale": "Falsch. Anne impliziert, dass es oft eine unabsichtliche Reaktion
+                  "rationale": "Falsch. Anne impliziert, dass es oft eine unabsichtliche Reaktion auf Stress ist, nicht unbedingt ein bewusster Erziehungsstil.",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Der Wunsch, die Kontrolle über die Kinder zu behalten.",
+                  "rationale": "Falsch. Obwohl Kontrolle eine Rolle spielen kann, nennt Anne primär Belastung und Erschöpfung als Auslöser.",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Die Unfähigkeit, andere pädagogische Methoden anzuwenden.",
+                  "rationale": "Falsch. Anne spricht von einem temporären Mangel an Kapazität, nicht von einer generellen Unfähigkeit.",
+                  "isCorrect": false
+                }
+              ]
+            },
+            {
+              "question": "Anne unterscheidet zwischen 'ertragen' und 'anerkennen'. Was versteht Anne unter Verhaltensweisen, die man 'erträgt'? 😐",
+              "hint": "Anne gibt ein Beispiel mit Essen. 🍝",
+              "answerOptions": [
+                {
+                  "text": "Verhaltensweisen, die man geduldig erträgt, obwohl man sie als wahnsinnig anstrengend empfindet und die oft mit der eigenen Erziehung zu tun haben.",
+                  "rationale": "Anne erklärt, dass 'ertragen' sich auf Verhaltensweisen (wie z.B. zermatschtes Kinderessen) bezieht, die man als anstrengend empfindet, aber geduldig hinnimmt, oft beeinflusst von der eigenen Biografie und Erziehung.",
+                  "isCorrect": true
+                },
+                {
+                  "text": "Verhaltensweisen, die man aktiv fördert und wertschätzt.",
+                  "rationale": "Falsch. Das beschreibt das 'Anerkennen' oder 'Wertschätzen'.",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Verhaltensweisen, die sofort korrigiert werden müssen, weil sie gefährlich sind.",
+                  "rationale": "Falsch. Anne spricht von Dingen, die man erträgt, nicht von akuten Gefahren, die sofortiges Eingreifen erfordern.",
+                  "isCorrect": false
+                },
+                {
+                  "text": "Verhaltensweisen, die man nicht sehen muss und deshalb ignoriert.",
+                  "rationale": "Falsch. Man erträgt sie, das heißt, man ist sich ihrer bewusst, auch wenn man sie nicht schön findet.",
+                  "isCorrect": false
+                }
+              ]
+            }
+          ]
+        };
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+
+        const quizContainer = document.getElementById('quiz-container');
+
+        function displayQuestion(questionData) {
+            quizContainer.innerHTML = ''; // Vorherigen Inhalt löschen
+
+            const questionElement = document.createElement('h3');
+            questionElement.textContent = questionData.question;
+            quizContainer.appendChild(questionElement);
+
+            const hintElement = document.createElement('p');
+            hintElement.textContent = `Tipp: ${questionData.hint}`;
+            hintElement.style.fontStyle = 'italic';
+            hintElement.style.fontSize = '0.9em';
+            hintElement.style.color = '#666';
+            quizContainer.appendChild(hintElement);
+
+            // Zufällige Reihenfolge der Antwortmöglichkeiten
+            const shuffledOptions = [...questionData.answerOptions];
+            for (let i = shuffledOptions.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffledOptions[i], shuffledOptions[j]] = [shuffledOptions[j], shuffledOptions[i]]; // Elemente tauschen
+            }
+
+            shuffledOptions.forEach((option, index) => {
+                const optionButton = document.createElement('button');
+                optionButton.textContent = option.text;
+                optionButton.onclick = () => checkAnswer(option, optionButton);
+                quizContainer.appendChild(optionButton);
+            });
+        }
+
+        function checkAnswer(selectedOption, buttonElement) {
+            const allButtons = quizContainer.querySelectorAll('button');
+            allButtons.forEach(button => {
+                button.disabled = true; // Alle Buttons deaktivieren, nachdem eine Antwort gewählt wurde
+            });
+
+            if (selectedOption.isCorrect) {
+                score++;
+                buttonElement.classList.add('correct-answer');
+            } else {
+                buttonElement.classList.add('wrong-answer');
+                // Die korrekte Antwort hervorheben
+                const correctAnswer = quizData.questions[currentQuestionIndex].answerOptions.find(opt => opt.isCorrect);
+                allButtons.forEach(button => {
+                    // Sicherstellen, dass der Button, der die korrekte Antwort enthält, hervorgehoben wird
+                    if (button.textContent === correctAnswer.text) {
+                        button.classList.add('correct-answer');
+                    }
+                });
+            }
+
+            const rationaleElement = document.createElement('p');
+            rationaleElement.classList.add('rationale');
+            rationaleElement.textContent = `Begründung: ${selectedOption.rationale}`;
+            quizContainer.appendChild(rationaleElement);
+
+            setTimeout(() => {
+                currentQuestionIndex++;
+                if (currentQuestionIndex < quizData.questions.length) {
+                    displayQuestion(quizData.questions[currentQuestionIndex]);
+                } else {
+                    displayResults();
+                }
+            }, 3000); // 3 Sekunden warten, bevor zur nächsten Frage oder den Ergebnissen übergegangen wird
+        }
+
+        function displayResults() {
+            quizContainer.innerHTML = '<h2>Quiz beendet! 🎉</h2>';
+            const resultText = document.createElement('p');
+            resultText.textContent = `Du hast ${score} von ${quizData.questions.length} Fragen richtig beantwortet.`;
+            quizContainer.appendChild(resultText);
+
+            if (score === quizData.questions.length) {
+                const perfectScoreMessage = document.createElement('p');
+                perfectScoreMessage.textContent = 'Herzlichen Glückwunsch! Eine perfekte Punktzahl! 🏆';
+                perfectScoreMessage.style.fontWeight = 'bold';
+                perfectScoreMessage.style.color = 'green';
+                quizContainer.appendChild(perfectScoreMessage);
+            } else {
+                const encouragementMessage = document.createElement('p');
+                encouragementMessage.textContent = 'Das ist ein guter Anfang! Versuche es gleich noch einmal, um dein Wissen zu festigen. 💪';
+                encouragementMessage.style.fontWeight = 'bold';
+                encouragementMessage.style.color = '#4E1A3D'; /* Akzentfarbe */
+                quizContainer.appendChild(encouragementMessage);
+            }
+
+
+            const restartButton = document.createElement('button');
+            restartButton.id = 'restart-button'; // ID für Styling
+            restartButton.textContent = 'Quiz neu starten 🔄';
+            restartButton.onclick = () => {
+                currentQuestionIndex = 0;
+                score = 0;
+                displayQuestion(quizData.questions[currentQuestionIndex]);
+            };
+            quizContainer.appendChild(restartButton);
+        }
+
+        // Quiz starten
+        displayQuestion(quizData.questions[currentQuestionIndex]);
+    });
+    </script>
+</body>
+</html>
